@@ -1,5 +1,5 @@
 <?php
-class ActionsMymodule
+class ActionsSearcheverywhere
 { 
      /** Overloading the doActions function : replacing the parent's function with the one below 
       *  @param      parameters  meta datas of the hook (context, etc...) 
@@ -8,50 +8,25 @@ class ActionsMymodule
       *  @return       void 
       */
       
-    function formObjectOptions($parameters, &$object, &$action, $hookmanager) 
-    {  
-      	global $langs,$db;
+        function printSearchForm($parameters, &$object, &$action, $hookmanager) {
+    	
+		global $langs,$db;
 		
-		if (in_array('ordercard',explode(':',$parameters['context']))) 
+		if (in_array('searchform',explode(':',$parameters['context']))) 
         {
         	
+			$langs->load('searcheverywhere@searcheverywhere');
+			
+			$res = '<div class="menu_titre"> '.img_object($langs->trans('searcheverywhere'),'searcheverywhere@searcheverywhere').' '.$langs->trans('Searcheverywhere').'<br /></div>';
+			
+			$res.='<form method="post" action="'.dol_buildpath('/searcheverywhere/search.php',1).'">
+				<input type="text" size="10" name="keyword" title="'.$langs->trans('Keyword').'" class="flat">
+				<input type="submit" value="'.$langs->trans('Go').'" class="button">
+				</form>';
+						
+        	$this->resprints = $res;
 		}
 		
 		return 0;
-	}
-     
-    function formEditProductOptions($parameters, &$object, &$action, $hookmanager) 
-    {
-		
-    	if (in_array('invoicecard',explode(':',$parameters['context'])))
-        {
-        	
-        }
-		
-        return 0;
     }
-
-	function formAddObjectLine ($parameters, &$object, &$action, $hookmanager) {
-		
-		global $db;
-		
-		if (in_array('ordercard',explode(':',$parameters['context'])) || in_array('invoicecard',explode(':',$parameters['context']))) 
-        {
-        	
-        }
-
-		return 0;
-	}
-
-	function printObjectLine ($parameters, &$object, &$action, $hookmanager){
-		
-		global $db;
-		
-		if (in_array('ordercard',explode(':',$parameters['context'])) || in_array('invoicecard',explode(':',$parameters['context']))) 
-        {
-        	
-        }
-
-		return 0;
-	}
 }
