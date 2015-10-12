@@ -8,6 +8,9 @@
 	dol_include_once('/projet/class/project.class.php');
 	dol_include_once('/projet/class/task.class.php');
 	dol_include_once('/comm/action/class/actioncomm.class.php');
+	dol_include_once('/compta/facture/class/facture.class.php');
+	
+	$langs->load('searcheverywhere@searcheverywhere');
 	
 	$get = GETPOST('get');
 	
@@ -26,7 +29,7 @@
 	
 	
 function _search($type, $keyword) {
-	global $db;
+	global $db, $langs;
 	
 	$table = MAIN_DB_PREFIX.$type;
 	$objname = ucfirst($type);
@@ -46,12 +49,29 @@ function _search($type, $keyword) {
 	elseif($type == 'task') {
 		$table = MAIN_DB_PREFIX.'projet_task';
 		
-	}elseif($type == 'event') {
+	}
+	elseif($type == 'event') {
 		$table = MAIN_DB_PREFIX.'actioncomm';
 		$objname = 'ActionComm';
 		$id_field = 'id';
 		$complete_label = false;
 	}
+	elseif($type == 'order') {
+		$table = MAIN_DB_PREFIX.'commande';
+		$objname = 'Commande';
+		$complete_label = false;
+	}
+	elseif($type == 'invoice') {
+		$table = MAIN_DB_PREFIX.'facture';
+		$objname = 'Facture';
+		$complete_label = false;
+	}
+	elseif($type == 'contact') {
+		$table = MAIN_DB_PREFIX.'socpeople';
+		
+		$complete_label = false;
+	}
+	
 	
 	$res = $db->query('DESCRIBE '.$table);
 	
@@ -63,6 +83,9 @@ function _search($type, $keyword) {
 		$sql_fields .=','. $fieldname;
 		
 		if( strpos($tbl->Type,'varchar') !== false || strpos($tbl->Type,'text') !== false ) {
+			
+			//$keyword = strtr($keyword, array('.'=>'%',' '=>'%'));
+			
 			$sql_where.=' OR '.$fieldname." LIKE '%".$db->escape($keyword)."%'";	
 		}
 		else if( strpos($tbl->Type,'int') !== false || strpos($tbl->Type,'double')!== false || strpos($tbl->Type,'float') !== false ) {
@@ -82,9 +105,10 @@ function _search($type, $keyword) {
 	//print $sql;
 	$res = $db->query($sql);
 	
-	print '<table class="border" width="100%"><tr class="liste_titre"><td>'.$type.'</td></tr>';
+	$nb_results = $db->num_rows($res);
+	print '<table class="border" width="100%"><tr class="liste_titre"><td>'.$langs->trans( ucfirst($objname) ).' <span class="badge">'.$nb_results.'</span></td></tr>';
 	
-	if($db->num_rows($res) == 0) {
+	if($nb_results == 0) {
 		print '<td>Pas de résultat</td>';
 	}
 	else{
@@ -112,6 +136,8 @@ function _search($type, $keyword) {
 				else if(empty($label) && !empty( $o->name )) $label = $o->name;
 				else if(empty($label) && !empty( $o->nom )) $label = $o->nom;
 				else if(empty($label) && !empty( $o->title )) $label = $o->title;
+				else if(empty($label) && !empty( $o->ref )) $label = $o->ref;
+				else if(empty($label) && !empty( $o->id)) $label = $o->id;
 			}
 			
 			if(method_exists($o, 'getNomUrl')) {

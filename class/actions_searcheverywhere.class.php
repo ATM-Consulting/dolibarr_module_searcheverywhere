@@ -17,11 +17,11 @@ class ActionsSearcheverywhere
         	
 			$langs->load('searcheverywhere@searcheverywhere');
 			
-			$res = '<div class="menu_titre"> '.img_object($langs->trans('searcheverywhere'),'searcheverywhere@searcheverywhere').' '.$langs->trans('Searcheverywhere').'<br /></div>';
+			$res = '';
 			
-			$res.='<form method="post" action="'.dol_buildpath('/searcheverywhere/search.php',1).'">
-				<input type="text" size="10" name="keyword" title="'.$langs->trans('Keyword').'" class="flat">
-				<input type="submit" value="'.$langs->trans('Go').'" class="button">
+			$res.='<form method="post" action="'.dol_buildpath('/searcheverywhere/search.php',1).'">';
+			$res.= '<div class="menu_titre menu_titre_search"><label for="sew_keyword"><a class="vsmenu" href="'.dol_buildpath('/searcheverywhere/search.php',1).'">'.img_object($langs->trans('searcheverywhere'),'searcheverywhere@searcheverywhere').' '.$langs->trans('Searcheverywhere').'</a></label></div>';
+			$res.= '	<input type="text" size="10" name="keyword" title="'.$langs->trans('Keyword').'" class="flat" id="sew_keyword" /><input type="submit" value="'.$langs->trans('Go').'" class="button" style="padding-top: 4px; padding-bottom: 4px; padding-left: 6px; padding-right: 6px">
 				</form>';
 						
         	$this->resprints = $res;

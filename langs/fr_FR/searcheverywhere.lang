@@ -1,2 +1,11 @@
-ModuleXXXXXXName = Name
-ModuleXXXXXXDesc = Descripion
+Module104790Name = RerchercheGlobale
+Module104790Desc = Permet une recherche globale dans tous les champs de la base de données d'une liste de tables pré-établies
+
+Searcheverywhere=Recherche Globale
+ActionComm=Agenda
+Propal=Proposition
+Task=Tâche
+Societe=Client/Prospect/Fournisseur
+Product=Produit
+SearchInfo=(Recherche strict du terme par défaut, ajoutez % pour une recherche générique - ex : 09%77%19%50%69 si vous ignorez la forme du numéro de téléphone)
+SearcheverywhereAbout=A propos

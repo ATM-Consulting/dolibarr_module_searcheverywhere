@@ -31,7 +31,7 @@ if (! $res) {
 
 // Libraries
 require_once DOL_DOCUMENT_ROOT . "/core/lib/admin.lib.php";
-require_once '../lib/mymodule.lib.php';
+require_once '../lib/searcheverywhere.lib.php';
 
 dol_include_once('/mymodule/lib/php-markdown/markdown.php');
 
@@ -55,7 +55,7 @@ $action = GETPOST('action', 'alpha');
 /*
  * View
  */
-$page_name = "MyModuleAbout";
+$page_name = "SearcheverywhereAbout";
 llxHeader('', $langs->trans($page_name));
 
 // Subheader
@@ -64,26 +64,25 @@ $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">'
 print_fiche_titre($langs->trans($page_name), $linkback);
 
 // Configuration header
-$head = mymoduleAdminPrepareHead();
+$head = searcheverywhereAdminPrepareHead();
 dol_fiche_head(
     $head,
     'about',
-    $langs->trans("Module10000Name"),
+    $langs->trans("Module104790Name"),
     0,
     'mymodule@mymodule'
 );
 
 // About page goes here
-echo $langs->trans("MyModuleAboutPage");
+echo $langs->trans("SearcheverywherePage");
 
 echo '<br>';
 
-$buffer = file_get_contents(dol_buildpath('/mymodule/README.md', 0));
-echo Markdown($buffer);
+
 
 echo '<br>',
-'<a href="' . dol_buildpath('/mymodule/COPYING', 1) . '">',
-'<img src="' . dol_buildpath('/mymodule/img/gplv3.png', 1) . '"/>',
+'<a href="' . dol_buildpath('/searcheverywhere/COPYING', 1) . '">',
+'<img src="' . dol_buildpath('/searcheverywhere/img/gplv3.png', 1) . '"/>',
 '</a>';
 
 llxFooter();

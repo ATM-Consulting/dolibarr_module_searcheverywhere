@@ -2,7 +2,9 @@
 
 	require 'config.php';
 	
-	llxHeader('', 'SearchEveryWhere', '', '', 0, 0, array('/searcheverywhere/js/jquery.tile.min.js')  );
+	$langs->load('searcheverywhere@searcheverywhere');
+	
+	llxHeader('', $langs->trans('Searcheverywhere'), '', '', 0, 0, array('/searcheverywhere/js/jquery.tile.min.js')  );
 
 	?>
 	<style type="text/css">
@@ -17,6 +19,7 @@
 			border-radius: 10px;
 			top:50px;
 			left:50px;
+			position:relative;
 		}
 		
 		#results div.result {
@@ -48,7 +51,7 @@
 	</div>
 	<script type="text/javascript">
 	
-		var TSearch = ['product','company','propal','projet','task','event'];
+		var TSearch = ['product','company','contact','propal','order','invoice','projet','task','event'];
 	
 		$(document).ready(function() {
 			
