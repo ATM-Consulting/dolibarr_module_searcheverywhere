@@ -9,6 +9,7 @@
 	dol_include_once('/projet/class/task.class.php');
 	dol_include_once('/comm/action/class/actioncomm.class.php');
 	dol_include_once('/compta/facture/class/facture.class.php');
+	dol_include_once('/commande/class/commande.class.php');
 	
 	$langs->load('searcheverywhere@searcheverywhere');
 	
