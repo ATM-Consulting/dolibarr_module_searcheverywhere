@@ -80,7 +80,7 @@
 						$('#results').append($div);
 						
 						$('#results div.result').tile();
-						
+						jQuery("#results div.result .classfortooltip").tipTip({maxWidth: "600px", edgeOffset: 10, delay: 50, fadeIn: 50, fadeOut: 50});
 					})
 					
 					
@@ -107,7 +107,5 @@
 	
 	
 	llxFooter();
-
-?>
 
 
