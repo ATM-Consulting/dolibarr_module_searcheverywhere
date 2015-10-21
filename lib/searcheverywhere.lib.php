@@ -53,3 +53,17 @@ function searcheverywhereAdminPrepareHead()
 
     return $head;
 }
+
+function searcheverywhere_prepare_head($str)
+{
+	global $langs, $conf;
+	$h = 0;
+	$head = array();
+
+	$head[$h][0] = dol_buildpath('/searcheverywhere/search.php?keyword='.urlencode($str), 1);
+	$head[$h][1] = $langs->trans('Searcheverywhere');
+	$head[$h][2] = 'search';
+	$h++;
+
+	return $head;
+}

@@ -1,6 +1,6 @@
 <?php
 /* <one line to give the program's name and a brief idea of what it does.>
- * Copyright (C) 2013 ATM Consulting <support@atm-consulting.fr>
+ * Copyright (C) 2015 ATM Consulting <support@atm-consulting.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 /**
  * 	\file		admin/about.php
- * 	\ingroup	mymodule
+ * 	\ingroup	importdevis
  * 	\brief		This file is an example about page
  * 				Put some comments here
  */
@@ -28,29 +28,17 @@ if (! $res) {
     $res = @include("../../../main.inc.php"); // From "custom" directory
 }
 
-
 // Libraries
 require_once DOL_DOCUMENT_ROOT . "/core/lib/admin.lib.php";
 require_once '../lib/searcheverywhere.lib.php';
 
-dol_include_once('/mymodule/lib/php-markdown/markdown.php');
-
-
-//require_once "../class/myclass.class.php";
 // Translations
-$langs->load("mymodule@mymodule");
+$langs->load("searcheverywhere@searcheverywhere");
 
 // Access control
 if (! $user->admin) {
     accessforbidden();
 }
-
-// Parameters
-$action = GETPOST('action', 'alpha');
-
-/*
- * Actions
- */
 
 /*
  * View
@@ -70,20 +58,18 @@ dol_fiche_head(
     'about',
     $langs->trans("Module104790Name"),
     0,
-    'mymodule@mymodule'
+    'searcheverywhere@searcheverywhere'
 );
 
 // About page goes here
-echo $langs->trans("SearcheverywherePage");
+print '<div style="float: left;"><img src="../img/Dolibarr_Preferred_Partner_logo.png" /></div>';
+print '<div>'.$langs->trans('ATMAbout').'</div>';
 
-echo '<br>';
+dol_fiche_end();
 
-
-
-echo '<br>',
-'<a href="' . dol_buildpath('/searcheverywhere/COPYING', 1) . '">',
-'<img src="' . dol_buildpath('/searcheverywhere/img/gplv3.png', 1) . '"/>',
-'</a>';
+print '<br><center>';
+print '<a href="http://www.atm-consulting.fr" target="_blank"><img src="../img/ATM_logo.jpg" /></a>';
+print '</center>';
 
 llxFooter();
 

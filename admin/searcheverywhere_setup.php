@@ -64,13 +64,13 @@ $head = searcheverywhereAdminPrepareHead();
 dol_fiche_head(
     $head,
     'settings',
-    $langs->trans("Module10000Name"),
+    $langs->trans("Module104790Name"),
     0,
     "searcheverywhere@searcheverywhere"
 );
 
 // Setup page goes here
-echo $langs->trans("searcheverywhereSetupPage");
+echo $langs->trans("searcheverywhereNoSetupRequired");
 
 llxFooter();
 
