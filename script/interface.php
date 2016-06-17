@@ -10,6 +10,7 @@
 	dol_include_once('/comm/action/class/actioncomm.class.php');
 	dol_include_once('/compta/facture/class/facture.class.php');
 	dol_include_once('/commande/class/commande.class.php');
+	dol_include_once('/expedition/class/expedition.class.php');
 	
 	$langs->load('searcheverywhere@searcheverywhere');
 	
@@ -37,6 +38,7 @@ function _search($type, $keyword) {
 	$id_field = 'rowid';
 	$complete_label = true;
 	$show_find_field = false;
+	$sql_join = '1';
 	
 	if($type == 'company') {
 		$table = MAIN_DB_PREFIX.'societe';
@@ -63,9 +65,11 @@ function _search($type, $keyword) {
 		$complete_label = false;
 	}
 	elseif($type == 'invoice') {
-		$table = MAIN_DB_PREFIX.'facture';
+		$table = array(MAIN_DB_PREFIX.'facture',MAIN_DB_PREFIX.'facture_extrafields');
 		$objname = 'Facture';
 		$complete_label = false;
+		$sql_join = MAIN_DB_PREFIX.'facture.rowid = '.MAIN_DB_PREFIX.'facture_extrafields.fk_object';
+		$id_field = MAIN_DB_PREFIX.'facture.rowid';
 	}
 	elseif($type == 'contact') {
 		$table = MAIN_DB_PREFIX.'socpeople';
@@ -73,61 +77,56 @@ function _search($type, $keyword) {
 		$complete_label = false;
 	}
 	
+	$table=(Array)$table;
 	
-	$res = $db->query('DESCRIBE '.$table);
+	$sql_where = ' 0 ';
+	$sql_fields = '';
 	
-	$sql_where  = $sql_fields = '';
-	
-	while($tbl = $db->fetch_object($res)) {
-		$fieldname = $tbl->Field;
-		//var_dump($tbl);
-		$sql_fields .=','. $fieldname;
+	foreach($table as $table1) {
 		
-		if( strpos($tbl->Type,'varchar') !== false || strpos($tbl->Type,'text') !== false ) {
+		$res = $db->query('DESCRIBE '.$table1);
+		
+		while($tbl = $db->fetch_object($res)) {
+			$fieldname = $tbl->Field;
+			//var_dump($tbl);
+			$sql_fields .=','. $table1.'.'.$fieldname.' as '.$table1.'_'.$fieldname;
 			
-			//$keyword = strtr($keyword, array('.'=>'%',' '=>'%'));
+			if( strpos($tbl->Type,'varchar') !== false || strpos($tbl->Type,'text') !== false ) {
+				$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '%".$db->escape($keyword)."%'";	
+			}
+			else if( strpos($tbl->Type,'int') !== false || strpos($tbl->Type,'double')!== false || strpos($tbl->Type,'float') !== false ) {
+				$i_keyword = (double)$keyword;
+				if(!empty($i_keyword))$sql_where.=' OR '.$table1.'.'.$fieldname." = ".$i_keyword;
+					
+			}
+			else if( strpos($tbl->Type,'date') !== false ) {
+				$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '".$db->escape($keyword)."%'";	
+			}
 			
-			$sql_where.=' OR '.$fieldname." LIKE '%".$db->escape($keyword)."%'";	
-		}
-		else if( strpos($tbl->Type,'int') !== false || strpos($tbl->Type,'double')!== false || strpos($tbl->Type,'float') !== false ) {
-			$i_keyword = (double)$keyword;
-			if(!empty($i_keyword))$sql_where.=' OR '.$fieldname." = ".$i_keyword;
-				
-		}
-		else{
-			$sql_where.=' OR '.$fieldname." = '".$db->escape($keyword)."'";
+			else{
+				$sql_where.=' OR '.$table1.'.'.$fieldname." = '".$db->escape($keyword)."'";
+			}
+			
+			
 		}
 		
 		
 	}
 	
 	
-	$sql = 'SELECT '.$id_field.' as rowid '.$sql_fields.'  FROM '.$table.' WHERE 0 '.$sql_where.' LIMIT 20 ';
+	$sql = 'SELECT DISTINCT '.$id_field.' as rowid FROM '.implode(',',$table).' WHERE ('.$sql_join.') AND ('.$sql_where.') LIMIT 20 ';
 	//print $sql;
 	$res = $db->query($sql);
 	
 	$nb_results = $db->num_rows($res);
-	print '<table class="border" width="100%"><tr class="liste_titre"><td>'.$langs->trans( ucfirst($objname) ).' <span class="badge">'.$nb_results.'</span></td></tr>';
+	print '<table class="border" width="100%"><tr class="liste_titre"><td colspan="2">'.$langs->trans( ucfirst($objname) ).' <span class="badge">'.$nb_results.'</span></td></tr>';
 	
 	if($nb_results == 0) {
-		print '<td>Pas de résultat</td>';
+		print '<td colspan="2">Pas de résultat</td>';
 	}
 	else{
 		while($obj = $db->fetch_object($res)) {
 		
-			$desc = '';
-			
-			if($show_find_field) {
-				foreach($obj as $k=>$v) {
-					if(preg_match("/" . $keyword . "/", $v)) {
-						$desc .= '<br />'.$k.' : '.preg_replace("/" . $keyword . "/", "<span class='highlight'>" . $keyword . "</span>", $v);	
-					}
-					
-					
-				}
-				
-			}
-			
 			$o=new $objname($db);
 			$o->fetch($obj->rowid);
 			
@@ -143,9 +142,30 @@ function _search($type, $keyword) {
 			
 			if(method_exists($o, 'getNomUrl')) {
 				$label = $o->getNomUrl(1).' '.$label;
+			}
+			
+			if(method_exists($o, 'getLibStatut')) {
+				$statut = $o->getLibStatut(3);
+				
 			}  
 			
-			print '<tr><td>'.$label.$desc.'</td></tr>';
+			$desc = '';
+			
+			if($show_find_field) {
+				foreach($o as $k=>$v) {
+					if(is_string($v) && preg_match("/" . $keyword . "/", $v)) {
+						$desc .= '<br />'.$k.' : '.preg_replace("/" . $keyword . "/", "<span class='highlight'>" . $keyword . "</span>", $v);	
+					}
+					
+					
+				}
+				
+			}
+			
+			print '<tr>
+				<td>'.$label.$desc.'</td>
+				<td align="right">'.$statut.'</td>
+			</tr>';
 			
 		}
 		
