@@ -13,3 +13,4 @@ SearchInfo=(Recherche strict du terme par défaut, ajoutez % pour une recherche 
 SearcheverywhereAbout=A propos
 searcheverywhereSetup=Configuration
 searcheverywhereNoSetupRequired=Aucune configuration requise
+searcheverywhereSearchOnlyInEntity=Rechercher uniquement les données de l'entité dans laquelle on se trouve
