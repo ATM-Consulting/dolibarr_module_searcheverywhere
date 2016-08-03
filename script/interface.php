@@ -114,8 +114,8 @@ function _search($type, $keyword) {
 	}
 	
 	
-    $sql = 'SELECT '.$id_field.' as rowid '.$sql_fields.'  FROM '.$table.' WHERE (0 '.$sql_where.') ';
-    if(!empty($conf->global->SEARCHEVERYWHERE_SEARCH_ONLY_IN_ENTITY)) $sql.= 'AND '.$table.'.entity = '.$conf->entity.' ';
+    $sql = 'SELECT DISTINCT '.$id_field.' as rowid FROM '.implode(',',$table).' WHERE ('.$sql_join.') AND ('.$sql_where.') ';
+    if(!empty($conf->global->SEARCHEVERYWHERE_SEARCH_ONLY_IN_ENTITY)) $sql.= 'AND '.$table[0].'.entity = '.$conf->entity.' ';
     $sql.= 'LIMIT 20 ';
 
 	//print $sql;
