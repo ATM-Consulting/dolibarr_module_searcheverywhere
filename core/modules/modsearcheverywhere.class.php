@@ -88,7 +88,7 @@ class modsearcheverywhere extends DolibarrModules
 
         // Config pages. Put here list of php pages
         // stored into searcheverywhere/admin directory, used to setup module.
-        $this->config_page_url = array("about.php@searcheverywhere");
+        $this->config_page_url = array("searcheverywhere_setup.php@searcheverywhere");
 
         // Dependencies
         // List of modules id that must be enabled if this module is enabled

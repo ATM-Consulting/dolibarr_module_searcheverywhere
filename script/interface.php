@@ -31,7 +31,7 @@
 	
 	
 function _search($type, $keyword) {
-	global $db, $langs;
+	global $db, $conf, $langs;
 	
 	$table = MAIN_DB_PREFIX.$type;
 	$objname = ucfirst($type);
@@ -114,7 +114,10 @@ function _search($type, $keyword) {
 	}
 	
 	
-	$sql = 'SELECT DISTINCT '.$id_field.' as rowid FROM '.implode(',',$table).' WHERE ('.$sql_join.') AND ('.$sql_where.') LIMIT 20 ';
+    $sql = 'SELECT DISTINCT '.$id_field.' as rowid FROM '.implode(',',$table).' WHERE ('.$sql_join.') AND ('.$sql_where.') ';
+    if(!empty($conf->global->SEARCHEVERYWHERE_SEARCH_ONLY_IN_ENTITY)) $sql.= 'AND '.$table[0].'.entity = '.$conf->entity.' ';
+    $sql.= 'LIMIT 20 ';
+
 	//print $sql;
 	$res = $db->query($sql);
 	
