@@ -10,9 +10,11 @@
 	dol_include_once('/comm/action/class/actioncomm.class.php');
 	dol_include_once('/compta/facture/class/facture.class.php');
 	dol_include_once('/commande/class/commande.class.php');
+	dol_include_once('/fourn/class/fournisseur.commande.class.php');
 	dol_include_once('/expedition/class/expedition.class.php');
 	
 	$langs->load('searcheverywhere@searcheverywhere');
+	$langs->load('orders');
 	
 	$get = GETPOST('get');
 	
@@ -62,6 +64,11 @@ function _search($type, $keyword) {
 	elseif($type == 'order') {
 		$table = MAIN_DB_PREFIX.'commande';
 		$objname = 'Commande';
+		$complete_label = false;
+	}
+	elseif($type == 'supplier_order') {
+		$table = MAIN_DB_PREFIX.'commande_fournisseur';
+		$objname = 'CommandeFournisseur';
 		$complete_label = false;
 	}
 	elseif($type == 'invoice') {
@@ -122,7 +129,11 @@ function _search($type, $keyword) {
 	$res = $db->query($sql);
 	
 	$nb_results = $db->num_rows($res);
-	print '<table class="border" width="100%"><tr class="liste_titre"><td colspan="2">'.$langs->trans( ucfirst($objname) ).' <span class="badge">'.$nb_results.'</span></td></tr>';
+	
+	$libelle = ucfirst($objname);
+	if($objname == 'CommandeFournisseur') $libelle = 'SupplierOrder';
+	
+	print '<table class="border" width="100%"><tr class="liste_titre"><td colspan="2">'.$langs->trans( $libelle ).' <span class="badge">'.$nb_results.'</span></td></tr>';
 	
 	if($nb_results == 0) {
 		print '<td colspan="2">Pas de résultat</td>';
