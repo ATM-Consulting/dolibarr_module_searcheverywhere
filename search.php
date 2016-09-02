@@ -58,7 +58,7 @@
 
 	<script type="text/javascript">
 		var url = "<?php echo dol_buildpath('/searcheverywhere/search.php?keyword=', 1) ?>";
-		var TSearch = ['product','company','contact','propal','order','invoice','projet','task','event','expedition'];
+		var TSearch = ['product','company','contact','propal','order','invoice','projet','task','event','expedition','supplier_order'];
 	
 		$(document).ready(function() {
 			
