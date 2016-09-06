@@ -40,7 +40,7 @@ function _search($type, $keyword) {
 	$id_field = 'rowid';
 	$complete_label = true;
 	$show_find_field = false;
-	$sql_join = '1';
+	$sql_join = '';
 	
 	if($type == 'company') {
 		$table = MAIN_DB_PREFIX.'societe';
@@ -75,7 +75,7 @@ function _search($type, $keyword) {
 		$table = array(MAIN_DB_PREFIX.'facture',MAIN_DB_PREFIX.'facture_extrafields');
 		$objname = 'Facture';
 		$complete_label = false;
-		$sql_join = MAIN_DB_PREFIX.'facture.rowid = '.MAIN_DB_PREFIX.'facture_extrafields.fk_object';
+		$sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'facture_extrafields ON ('.MAIN_DB_PREFIX.'facture.rowid = '.MAIN_DB_PREFIX.'facture_extrafields.fk_object)';
 		$id_field = MAIN_DB_PREFIX.'facture.rowid';
 	}
 	elseif($type == 'contact') {
@@ -120,8 +120,7 @@ function _search($type, $keyword) {
 		
 	}
 	
-	
-    $sql = 'SELECT DISTINCT '.$id_field.' as rowid FROM '.implode(',',$table).' WHERE ('.$sql_join.') AND ('.$sql_where.') ';
+    $sql = 'SELECT DISTINCT '.$id_field.' as rowid FROM '.$table[0].' '.$sql_join.' WHERE ('.$sql_where.') ';
     if(!empty($conf->global->SEARCHEVERYWHERE_SEARCH_ONLY_IN_ENTITY)) $sql.= 'AND '.$table[0].'.entity = '.$conf->entity.' ';
     $sql.= 'LIMIT 20 ';
 
