@@ -62,20 +62,39 @@ function _search($type, $keyword) {
 		$complete_label = false;
 	}
 	elseif($type == 'order') {
-		$table = MAIN_DB_PREFIX.'commande';
+		$table = array(MAIN_DB_PREFIX.'commande',MAIN_DB_PREFIX.'commande_extrafields',MAIN_DB_PREFIX.'commandedet',MAIN_DB_PREFIX.'commandedet_extrafields');
 		$objname = 'Commande';
 		$complete_label = false;
+		$sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'commande_extrafields ON ('.MAIN_DB_PREFIX.'commande.rowid = '.MAIN_DB_PREFIX.'commande_extrafields.fk_object)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'commandedet ON ('.MAIN_DB_PREFIX.'commande.rowid = '.MAIN_DB_PREFIX.'commandedet.fk_commande)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'commandedet_extrafields ON ('.MAIN_DB_PREFIX.'commandedet.rowid = '.MAIN_DB_PREFIX.'commandedet_extrafields.fk_object)';
+		$id_field = MAIN_DB_PREFIX.'commande.rowid';
+	}
+	elseif($type == 'propal') {
+		$table = array(MAIN_DB_PREFIX.'propal',MAIN_DB_PREFIX.'propal_extrafields',MAIN_DB_PREFIX.'propaldet',MAIN_DB_PREFIX.'propaldet_extrafields');
+		$objname = 'Propal';
+		$complete_label = false;
+		$sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'propal_extrafields ON ('.MAIN_DB_PREFIX.'propal.rowid = '.MAIN_DB_PREFIX.'propal_extrafields.fk_object)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'propaldet ON ('.MAIN_DB_PREFIX.'propal.rowid = '.MAIN_DB_PREFIX.'propaldet.fk_propal)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'propaldet_extrafields ON ('.MAIN_DB_PREFIX.'propaldet.rowid = '.MAIN_DB_PREFIX.'propaldet_extrafields.fk_object)';
+		$id_field = MAIN_DB_PREFIX.'propal.rowid';
 	}
 	elseif($type == 'supplier_order') {
-		$table = MAIN_DB_PREFIX.'commande_fournisseur';
+		$table = array(MAIN_DB_PREFIX.'commande_fournisseur',MAIN_DB_PREFIX.'commande_fournisseur_extrafields',MAIN_DB_PREFIX.'commande_fournisseurdet',MAIN_DB_PREFIX.'commande_fournisseurdet_extrafields');
 		$objname = 'CommandeFournisseur';
 		$complete_label = false;
+		$sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'commande_fournisseur_extrafields ON ('.MAIN_DB_PREFIX.'commande_fournisseur.rowid = '.MAIN_DB_PREFIX.'commande_fournisseur_extrafields.fk_object)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'commande_fournisseurdet ON ('.MAIN_DB_PREFIX.'commande_fournisseur.rowid = '.MAIN_DB_PREFIX.'commande_fournisseurdet.fk_commande)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'commande_fournisseurdet_extrafields ON ('.MAIN_DB_PREFIX.'commande_fournisseurdet.rowid = '.MAIN_DB_PREFIX.'commande_fournisseurdet_extrafields.fk_object)';
+		$id_field = MAIN_DB_PREFIX.'commande_fournisseur.rowid';
 	}
 	elseif($type == 'invoice') {
-		$table = array(MAIN_DB_PREFIX.'facture',MAIN_DB_PREFIX.'facture_extrafields');
+		$table = array(MAIN_DB_PREFIX.'facture',MAIN_DB_PREFIX.'facture_extrafields',MAIN_DB_PREFIX.'facturedet',MAIN_DB_PREFIX.'facturedet_extrafields');
 		$objname = 'Facture';
 		$complete_label = false;
 		$sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'facture_extrafields ON ('.MAIN_DB_PREFIX.'facture.rowid = '.MAIN_DB_PREFIX.'facture_extrafields.fk_object)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'facturedet ON ('.MAIN_DB_PREFIX.'facture.rowid = '.MAIN_DB_PREFIX.'facturedet.fk_facture)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'facturedet_extrafields ON ('.MAIN_DB_PREFIX.'facturedet.rowid = '.MAIN_DB_PREFIX.'facturedet_extrafields.fk_object)';
 		$id_field = MAIN_DB_PREFIX.'facture.rowid';
 	}
 	elseif($type == 'contact') {
