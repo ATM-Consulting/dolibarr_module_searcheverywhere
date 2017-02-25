@@ -84,6 +84,6 @@ class searcheverywherebox extends ModeleBoxes
      */
     public function showBox($head = null, $contents = null, $nooutput=0)
     {
-        parent::showox($this->info_box_head, $this->info_box_contents, $nooutput);
+        parent::showBox($this->info_box_head, $this->info_box_contents, $nooutput);
     }
 }
