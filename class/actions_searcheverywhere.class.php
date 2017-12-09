@@ -8,11 +8,11 @@ class ActionsSearcheverywhere
       *  @return       void 
       */
       
-        function printSearchForm($parameters, &$object, &$action, $hookmanager) {
+    function printSearchForm($parameters, &$object, &$action, $hookmanager) {
     	
 		global $langs,$db;
 		
-		if (in_array('searchform',explode(':',$parameters['context']))) 
+		if (in_array('searchform',explode(':',$parameters['context'])) && DOL_VERSION <= 3.8) 
         {
         	
 			$langs->load('searcheverywhere@searcheverywhere');
@@ -24,9 +24,28 @@ class ActionsSearcheverywhere
 			$res.= '	<input type="text" size="10" name="keyword" title="'.$langs->trans('Keyword').'" class="flat" id="sew_keyword" /><input type="submit" value="'.$langs->trans('Go').'" class="button" style="padding-top: 4px; padding-bottom: 4px; padding-left: 6px; padding-right: 6px">
 				</form>';
 						
-        	$this->resprints = $res;
+			$this->resprints = $res;
 		}
 		
 		return 0;
     }
+	
+	function addSearchEntry($parameters, &$object, &$action, $hookmanager) {
+		global $langs;
+		
+		if (in_array('searchform',explode(':',$parameters['context'])) && DOL_VERSION > 3.8) {
+			$search_boxvalue = $parameters['search_boxvalue'];
+			
+			$this->results = array(
+				'searcheverywhere' => array(
+					'img'=>'object_searcheverywhere'
+					,'label'=>$langs->trans("searcheverywhere", $search_boxvalue)
+					,'text'=>img_picto('','object_searcheverywhere').' '.$langs->trans("searcheverywhere", $search_boxvalue)
+					,'url'=>dol_buildpath('/searcheverywhere/search.php',1).'?keyword='.urlencode($search_boxvalue)
+				)
+			);
+		}
+		
+		return 0;
+	}
 }
