@@ -88,6 +88,15 @@ print '<td align="center" width="300">';
 print ajax_constantonoff('SEARCHEVERYWHERE_SEARCH_ONLY_IN_ENTITY');
 print '</td></tr>';
 
+$var=!$var;
+print '<tr '.$bc[$var].'>';
+print '<td>'.$langs->trans("SEARCHEVERYWHERE_SEARCH_PREVIEW").'</td>';
+print '<td align="center" width="20">&nbsp;</td>';
+print '<td align="center" width="300">';
+print ajax_constantonoff('SEARCHEVERYWHERE_SEARCH_PREVIEW');
+print '</td></tr>';
+
+
 print '</table>';
 
 llxFooter();
