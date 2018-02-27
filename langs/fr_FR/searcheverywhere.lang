@@ -14,3 +14,4 @@ SearcheverywhereAbout=A propos
 searcheverywhereSetup=Configuration
 searcheverywhereNoSetupRequired=Aucune configuration requise
 searcheverywhereSearchOnlyInEntity=Rechercher uniquement les données de l'entité dans laquelle on se trouve
+SEARCHEVERYWHERE_SEARCH_PREVIEW=Utiliser la recherche avec preview
