@@ -214,11 +214,13 @@ function _search($type, $keyword, $asArray=false) {
 
 			preg_match_all('/<a[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $label, $match);
 
+			$url = is_array($match['href']) ? $match['href'][0] : $match['href'];
+
 			if($asArray) {
 			    $TResult[] = array(
 			        'label'=>$label
 			        ,'label_clean'=>strip_tags($label)
-			        ,'url'=>$match['href']
+			        ,'url'=>$url
 			        ,'desc'=>$desc
 			        ,'statut'=>$statut
 			    );
