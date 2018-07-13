@@ -103,15 +103,19 @@ class ActionsSearcheverywhere
 	}
 
 	function addSearchEntry($parameters, &$object, &$action, $hookmanager) {
-		global $langs;
+		global $langs, $db;
 
 		if (in_array('searchform',explode(':',$parameters['context'])) && DOL_VERSION > 3.8 && empty($conf->global->SEARCHEVERYWHERE_SEARCH_PREVIEW)) {
 			$search_boxvalue = $parameters['search_boxvalue'];
 
 			$langs->load('searcheverywhere@searcheverywhere');
 
+			dol_include_once('/searcheverywhere/core/modules/modsearcheverywhere.class.php');
+			$modSearch = new modsearcheverywhere($db);
+
 			$this->results = array(
 				'searcheverywhere' => array(
+					'position' => $modSearch->numero,
 					'img'=>'object_searcheverywhere'
 					,'label'=>$langs->trans('Searcheverywhere')
 					,'text'=>img_picto('','object_searcheverywhere@searcheverywhere').' '.$langs->trans('Searcheverywhere')
