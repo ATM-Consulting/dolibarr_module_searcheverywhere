@@ -27,7 +27,19 @@
 
 		case 'search-all':
 
-		    $TObjectType=array('product','company','contact','projet','task','event','propal','order','invoice','expedition','supplier_order');
+		    $TObjectType=array('product','company','contact');
+			if ($conf->projet->enabled)
+			{
+				$TObjectType[] = 'projet';
+				$TObjectType[] = 'task';
+			}
+			if ($conf->agenda->enabled) $TObjectType[] = 'event';
+			if ($conf->propal->enabled) $TObjectType[] = 'propal';
+			if ($conf->commande->enabled) $TObjectType[] = 'order';
+			if ($conf->facture->enabled) $TObjectType[] = 'invoice';
+			if ($conf->expedition->enabled) $TObjectType[] = 'expedition';
+			if ($conf->fournisseur->enabled) $TObjectType[] = 'supplier_order';
+
 		    $conf->global->SEARCHEVERYWHERE_NB_ROWS = 5;
 		    $TResult=array();
 		    foreach($TObjectType as $type) {
