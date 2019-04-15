@@ -7,6 +7,7 @@
 	$langs->load('searcheverywhere@searcheverywhere');
 	
 	$keyword = GETPOST('keyword');
+	if (empty($keyword)) $keyword=GETPOST('sall');
 	
 	llxHeader('', $langs->trans('Searcheverywhere'), '', '', 0, 0, array('/searcheverywhere/js/jquery.tile.min.js')  );
 	$head = searcheverywhere_prepare_head($keyword);
