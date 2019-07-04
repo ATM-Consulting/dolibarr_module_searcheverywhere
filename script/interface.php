@@ -12,6 +12,10 @@
 	dol_include_once('/commande/class/commande.class.php');
 	dol_include_once('/fourn/class/fournisseur.commande.class.php');
 	dol_include_once('/expedition/class/expedition.class.php');
+	if($conf->of->enabled) dol_include_once('/of/class/ordre_fabrication_asset.class.php');
+	if($conf->nomenclature->enabled) dol_include_once('/nomenclature/class/nomenclature.class.php');
+	if($conf->workstation->enabled) dol_include_once('/workstation/class/workstation.class.php');
+	if($conf->configurateur->enabled) dol_include_once('/configurateur/class/configurateur.class.php');
 
 	$langs->load('searcheverywhere@searcheverywhere');
 	$langs->load('orders');
@@ -39,6 +43,10 @@
 			if ($conf->facture->enabled) $TObjectType[] = 'invoice';
 			if ($conf->expedition->enabled) $TObjectType[] = 'expedition';
 			if ($conf->fournisseur->enabled) $TObjectType[] = 'supplier_order';
+			if ($conf->of->enabled) $TObjectType[] = 'of';
+			if ($conf->nomenclature->enabled) $TObjectType[] = 'nomenclature';
+			if ($conf->workstation->enabled) $TObjectType[] = 'workstation';
+			if ($conf->configurateur->enabled) $TObjectType[] = 'configurateur';
 
 		    $conf->global->SEARCHEVERYWHERE_NB_ROWS = 5;
 		    $TResult=array();
@@ -66,6 +74,9 @@ function _search($type, $keyword, $asArray=false) {
 	$complete_label = true;
 	$show_find_field = false;
 	$sql_join = '';
+    if($conf->of->enabled || $conf->nomenclature->enabled ||$conf->workstation->enabled) {
+        $PDOdb = new TPDOdb;
+    }
 
 	$TResult=array();
 
@@ -144,7 +155,37 @@ function _search($type, $keyword, $asArray=false) {
 		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'societe ON ('.MAIN_DB_PREFIX.'societe.rowid = '.MAIN_DB_PREFIX.'expedition.fk_soc)';
 
 	}
+    elseif($type == 'of') {
+        $table = array(MAIN_DB_PREFIX.'assetOf',MAIN_DB_PREFIX.'assetOf_line');
+        $objname = 'TAssetOF';
+        $complete_label = false;
+        $sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'assetOf_line ON ('.MAIN_DB_PREFIX.'assetOf.rowid = '.MAIN_DB_PREFIX.'assetOf_line.fk_assetOf)';
 
+        $id_field = MAIN_DB_PREFIX.'assetOf.rowid';
+    }
+    elseif($type == 'nomenclature') {
+        $table = array(MAIN_DB_PREFIX.'nomenclature',MAIN_DB_PREFIX.'nomenclaturedet');
+        $objname = 'TNomenclature';
+        $complete_label = true;
+        $sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'nomenclaturedet ON ('.MAIN_DB_PREFIX.'nomenclature.rowid = '.MAIN_DB_PREFIX.'nomenclaturedet.fk_nomenclature)';
+
+        $id_field = MAIN_DB_PREFIX.'nomenclature.rowid';
+    }
+    elseif($type == 'workstation') {
+        $table = array(MAIN_DB_PREFIX.'workstation');
+        $objname = 'TWorkstation';
+        $complete_label = false;
+
+        $id_field = MAIN_DB_PREFIX.'workstation.rowid';
+    }
+    elseif($type == 'configurateur') {
+        $table = array(MAIN_DB_PREFIX.'configurateur',MAIN_DB_PREFIX.'configurateur_element');
+        $objname = 'Configurateur';
+        $complete_label = false;
+        $sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'configurateur_element ON ('.MAIN_DB_PREFIX.'configurateur.rowid = '.MAIN_DB_PREFIX.'configurateur_element.fk_config)';
+
+        $id_field = MAIN_DB_PREFIX.'configurateur.rowid';
+    }
 	$table=(Array)$table;
 
 	$sql_where = ' 0 ';
@@ -202,8 +243,10 @@ function _search($type, $keyword, $asArray=false) {
 	else{
 		while($obj = $db->fetch_object($res)) {
 
+
 			$o=new $objname($db);
-			$o->fetch($obj->rowid);
+			if($objname == 'TAssetOF'|| $objname == 'TNomenclature' || $objname == 'TWorkstation') $o->load($PDOdb, $obj->rowid);
+			else $o->fetch($obj->rowid);
 
 			if($o->id<=0) continue;
 
