@@ -70,6 +70,10 @@
 			<?php if ($conf->agenda->enabled) echo "'event',"; ?>
 			<?php if ($conf->expedition->enabled) echo "'expedition',"; ?>
 			<?php if ($conf->fournisseur->enabled) echo "'supplier_order',"; ?>
+			<?php if ($conf->of->enabled) echo "'of',"; ?>
+			<?php if ($conf->nomenclature->enabled) echo "'nomenclature',"; ?>
+			<?php if ($conf->workstation->enabled) echo "'workstation',"; ?>
+			<?php if ($conf->configurateur->enabled) echo "'configurateur',"; ?>
 		];
 	
 		$(document).ready(function() {
@@ -91,7 +95,7 @@
 						}
 						
 					}).done(function(data) {
-						
+
 						$('#results span.loading').remove();
 						
 						$div = $('<div class="result" />');
