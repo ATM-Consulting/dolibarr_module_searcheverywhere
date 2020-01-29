@@ -188,36 +188,72 @@ function _search($type, $keyword, $asArray=false) {
     }
 	$table=(Array)$table;
 
-	$sql_where = ' 0 ';
+	$sql_where = ' 0=1 ';
 	$sql_fields = '';
 
 	foreach($table as $table1) {
+		if($db->type == "pgsql"){
+			
+			$sqlpg = "SELECT column_name AS field, data_type AS Type  FROM information_schema.columns WHERE table_schema = 'public' AND table_name   = '".$table1."'";
+			$res = $db->query($sqlpg);
+			//$res = $db->query('DESCRIBE '.$table1);
 
-		$res = $db->query('DESCRIBE '.$table1);
+			while($tbl = $db->fetch_object($res)) {
+				$fieldname = $tbl->field;
+				console_log($tbl->field);
 
-		while($tbl = $db->fetch_object($res)) {
-			$fieldname = $tbl->Field;
-			//var_dump($tbl);
-			$sql_fields .=','. $table1.'.'.$fieldname.' as '.$table1.'_'.$fieldname;
+				//var_dump($tbl);
+				$sql_fields .=','. $table1.'.'.$fieldname.' as '.$table1.'_'.$fieldname;
 
-			if( strpos($tbl->Type,'varchar') !== false || strpos($tbl->Type,'text') !== false ) {
-				$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '%".$db->escape($keyword)."%'";
+				if( strpos($tbl->Type,'varchar') !== false || strpos($tbl->Type,'text') !== false ) {
+					$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '%".$db->escape($keyword)."%'";
+				}
+				else if( strpos($tbl->Type,'smallint') !== false || strpos($tbl->Type,'double')!== false || strpos($tbl->Type,'float') !== false ) {
+					$i_keyword = (double)$keyword;
+					if(!empty($i_keyword))$sql_where.=' OR '.$table1.'.'.$fieldname." = ".$i_keyword;
+
+				}
+				else if( strpos($tbl->Type,'date') !== false ) {
+					$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '".$db->escape($keyword)."%'";
+				}
+
+				else{
+					$sql_where.=' OR '.$table1.'.'.$fieldname."::text LIKE '%".$db->escape($keyword)."%'";
+				}
+
+
 			}
-			else if( strpos($tbl->Type,'int') !== false || strpos($tbl->Type,'double')!== false || strpos($tbl->Type,'float') !== false ) {
-				$i_keyword = (double)$keyword;
-				if(!empty($i_keyword))$sql_where.=' OR '.$table1.'.'.$fieldname." = ".$i_keyword;
 
+		}else{
+			$res = $db->query('DESCRIBE '.$table1);
+
+			while($tbl = $db->fetch_object($res)) {
+				$fieldname = $tbl->Field;
+				//var_dump($tbl);
+				$sql_fields .=','. $table1.'.'.$fieldname.' as '.$table1.'_'.$fieldname;
+	
+				if( strpos($tbl->Type,'varchar') !== false || strpos($tbl->Type,'text') !== false ) {
+					$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '%".$db->escape($keyword)."%'";
+				}
+				else if( strpos($tbl->Type,'int') !== false || strpos($tbl->Type,'double')!== false || strpos($tbl->Type,'float') !== false ) {
+					$i_keyword = (double)$keyword;
+					if(!empty($i_keyword))$sql_where.=' OR '.$table1.'.'.$fieldname." = ".$i_keyword;
+	
+				}
+				else if( strpos($tbl->Type,'date') !== false ) {
+					$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '".$db->escape($keyword)."%'";
+				}
+	
+				else{
+					console_log($tbl->Type);
+					$sql_where.=' OR '.$table1.'.'.$fieldname." = '".$db->escape($keyword)."'";
+				}
+	
+	
 			}
-			else if( strpos($tbl->Type,'date') !== false ) {
-				$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '".$db->escape($keyword)."%'";
-			}
-
-			else{
-				$sql_where.=' OR '.$table1.'.'.$fieldname." = '".$db->escape($keyword)."'";
-			}
-
-
 		}
+
+		
 
 
 	}
