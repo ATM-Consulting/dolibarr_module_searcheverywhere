@@ -238,7 +238,7 @@ function _search($type, $keyword, $asArray=false) {
 	if(!$asArray) print '<table class="border" width="100%"><tr class="liste_titre"><td colspan="2">'.$langs->trans( $libelle ).' <span class="badge">'.$nb_results.'</span></td></tr>';
 
 	if($nb_results == 0) {
-	    if(!$asArray) 	print '<td colspan="2">Pas de résultat</td>';
+	    if(!$asArray) 	print '<td colspan="2" class="center">'.$langs->trans("NoResults").'</td>'; // Pas de résultat
 	}
 	else{
 		while($obj = $db->fetch_object($res)) {
