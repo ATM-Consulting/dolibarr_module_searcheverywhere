@@ -76,7 +76,8 @@
 		$(document).ready(function() {
 			$("#btsearch").click(function() {
 				var keyword = $("#keyword").val();
-				$('#results').html("<span class=\"loading\">Chargement...</span>");
+
+				$('#results').html("<span class=\"loading\"><?php echo $langs->trans('Loading'); ?>...</span>");
 				$('a#search').attr('href', url+keyword);
 				
 				for(x in TSearch) {
