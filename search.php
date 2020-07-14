@@ -50,11 +50,8 @@
 	</style>
 	
 	<input type="text" name="keyword" id="keyword" value="" />
-	<input type="button" name="btseach" id="btseach" value="Rechercher" />
-	
-	<div id="results">
-		
-	</div>
+	<input type="button" name="btsearch" id="btsearch" value="<?php print $langs->trans('Search'); ?>" />
+	<div id="results"></div>
 	<div style="clear:both"></div>
 
 	<script type="text/javascript">
@@ -77,9 +74,7 @@
 		];
 	
 		$(document).ready(function() {
-			
-			$("#btseach").click(function() {
-				
+			$("#btsearch").click(function() {
 				var keyword = $("#keyword").val();
 				$('#results').html("<span class=\"loading\">Chargement...</span>");
 				$('a#search').attr('href', url+keyword);
@@ -117,7 +112,7 @@
 				if($keyword!='') {
 					?>
 					$("#keyword").val("<?php echo $keyword; ?>");
-					$("#btseach").click();
+					$("#btsearch").click();
 					<?php
 				}			
 			
