@@ -1,5 +1,4 @@
 <?php
-
 	require 'config.php';
 	dol_include_once('/core/lib/functions.lib.php');
 	dol_include_once('/searcheverywhere/lib/searcheverywhere.lib.php');
@@ -12,8 +11,6 @@
 	llxHeader('', $langs->trans('Searcheverywhere'), '', '', 0, 0, array('/searcheverywhere/js/jquery.tile.min.js')  );
 	$head = searcheverywhere_prepare_head($keyword);
 	dol_fiche_head($head, 'search', $langs->trans('Searcheverywhere'), 0, 'searcheverywhere@searcheverywhere');
-
-	
 	?>
 	<style type="text/css">
 		#results {
@@ -31,18 +28,13 @@
 		}
 		
 		#results div.result {
-			
-			width:300px; 
+			width:300px;
 			float:left;
-			
 			border-color: #bbb #aaa #aaa;
 		    border-style: solid;
 		    border-width: 1px;
 		    box-shadow: 3px 3px 4px #ddd;
 		    margin: 0 10px 14px 0;
-		   
-		   
-			
 		}
 		.highlight {
 			font-weight: bold;
@@ -53,7 +45,6 @@
 	<input type="button" name="btsearch" id="btsearch" value="<?php print $langs->trans('Search'); ?>" />
 	<div id="results"></div>
 	<div style="clear:both"></div>
-
 	<script type="text/javascript">
 		var url = "<?php echo dol_buildpath('/searcheverywhere/search.php?keyword=', 1) ?>";
 		var TSearch = [
@@ -81,7 +72,6 @@
 				$('a#search').attr('href', url+keyword);
 				
 				for(x in TSearch) {
-					
 					$.ajax({
 						url : "./script/interface.php"
 						,data :{
@@ -91,7 +81,6 @@
 						}
 						
 					}).done(function(data) {
-
 						$('#results span.loading').remove();
 						
 						$div = $('<div class="result" />');
@@ -102,30 +91,17 @@
 						$('#results div.result').tile();
 						jQuery("#results div.result .classfortooltip").tipTip({maxWidth: "600px", edgeOffset: 10, delay: 50, fadeIn: 50, fadeOut: 50});
 					})
-					
-					
 				}
-				
-				
 			});
-			
 			<?php
 				if($keyword!='') {
 					?>
 					$("#keyword").val("<?php echo $keyword; ?>");
 					$("#btsearch").click();
 					<?php
-				}			
-			
+				}
 			?>
-			
 		});
 	</script>
-
-
 	<?php
-	
-	
 	llxFooter();
-
-

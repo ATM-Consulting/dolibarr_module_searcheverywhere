@@ -63,8 +63,6 @@
 			break;
 	}
 
-
-
 function _search($type, $keyword, $asArray=false) {
 	global $db, $conf, $langs;
 
@@ -216,9 +214,7 @@ function _search($type, $keyword, $asArray=false) {
 				$sql_where.=' OR '.$table1.'.'.$fieldname." = '".$db->escape($keyword)."'";
 			}
 
-
 		}
-
 
 	}
 
@@ -306,7 +302,6 @@ function _search($type, $keyword, $asArray=false) {
 		}
 
 	}
-
 
 	if(!$asArray) print '</table>';
     else return $TResult;

@@ -54,9 +54,6 @@ class ActionsSearcheverywhere
 					              });
 
 					              response(c);
-
-
-
 					          }
 					        });
 					      },
@@ -92,8 +89,6 @@ class ActionsSearcheverywhere
 
                 </script>
               ';
-
-
 			}
 
 			$this->resprints = $res;
