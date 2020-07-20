@@ -27,7 +27,19 @@
 
 		case 'search-all':
 
-		    $TObjectType=array('product','company','contact','projet','task','event','propal','order','invoice','expedition','supplier_order');
+		    $TObjectType=array('product','company','contact');
+			if ($conf->projet->enabled)
+			{
+				$TObjectType[] = 'projet';
+				$TObjectType[] = 'task';
+			}
+			if ($conf->agenda->enabled) $TObjectType[] = 'event';
+			if ($conf->propal->enabled) $TObjectType[] = 'propal';
+			if ($conf->commande->enabled) $TObjectType[] = 'order';
+			if ($conf->facture->enabled) $TObjectType[] = 'invoice';
+			if ($conf->expedition->enabled) $TObjectType[] = 'expedition';
+			if ($conf->fournisseur->enabled) $TObjectType[] = 'supplier_order';
+
 		    $conf->global->SEARCHEVERYWHERE_NB_ROWS = 5;
 		    $TResult=array();
 		    foreach($TObjectType as $type) {
@@ -63,7 +75,9 @@ function _search($type, $keyword, $asArray=false) {
 		$complete_label = false;
 	}
 	elseif($type == 'projet') {
-		$table = MAIN_DB_PREFIX.'projet';
+		$id_field = MAIN_DB_PREFIX.'projet.rowid';
+		$table = array(MAIN_DB_PREFIX.'projet', MAIN_DB_PREFIX.'societe');
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'societe ON ('.MAIN_DB_PREFIX.'societe.rowid = '.MAIN_DB_PREFIX.'projet.fk_soc)';
 		$objname = 'Project';
 	}
 	elseif($type == 'task') {
@@ -77,45 +91,58 @@ function _search($type, $keyword, $asArray=false) {
 		$complete_label = false;
 	}
 	elseif($type == 'order') {
-		$table = array(MAIN_DB_PREFIX.'commande',MAIN_DB_PREFIX.'commande_extrafields',MAIN_DB_PREFIX.'commandedet',MAIN_DB_PREFIX.'commandedet_extrafields');
+		$table = array(MAIN_DB_PREFIX.'commande',MAIN_DB_PREFIX.'commande_extrafields',MAIN_DB_PREFIX.'commandedet',MAIN_DB_PREFIX.'commandedet_extrafields', MAIN_DB_PREFIX.'societe');
 		$objname = 'Commande';
 		$complete_label = false;
 		$sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'commande_extrafields ON ('.MAIN_DB_PREFIX.'commande.rowid = '.MAIN_DB_PREFIX.'commande_extrafields.fk_object)';
 		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'commandedet ON ('.MAIN_DB_PREFIX.'commande.rowid = '.MAIN_DB_PREFIX.'commandedet.fk_commande)';
 		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'commandedet_extrafields ON ('.MAIN_DB_PREFIX.'commandedet.rowid = '.MAIN_DB_PREFIX.'commandedet_extrafields.fk_object)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'societe ON ('.MAIN_DB_PREFIX.'societe.rowid = '.MAIN_DB_PREFIX.'commande.fk_soc)';
 		$id_field = MAIN_DB_PREFIX.'commande.rowid';
 	}
 	elseif($type == 'propal') {
-		$table = array(MAIN_DB_PREFIX.'propal',MAIN_DB_PREFIX.'propal_extrafields',MAIN_DB_PREFIX.'propaldet',MAIN_DB_PREFIX.'propaldet_extrafields');
+		$table = array(MAIN_DB_PREFIX.'propal',MAIN_DB_PREFIX.'propal_extrafields',MAIN_DB_PREFIX.'propaldet',MAIN_DB_PREFIX.'propaldet_extrafields', MAIN_DB_PREFIX.'societe');
 		$objname = 'Propal';
 		$complete_label = false;
 		$sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'propal_extrafields ON ('.MAIN_DB_PREFIX.'propal.rowid = '.MAIN_DB_PREFIX.'propal_extrafields.fk_object)';
 		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'propaldet ON ('.MAIN_DB_PREFIX.'propal.rowid = '.MAIN_DB_PREFIX.'propaldet.fk_propal)';
 		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'propaldet_extrafields ON ('.MAIN_DB_PREFIX.'propaldet.rowid = '.MAIN_DB_PREFIX.'propaldet_extrafields.fk_object)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'societe ON ('.MAIN_DB_PREFIX.'societe.rowid = '.MAIN_DB_PREFIX.'propal.fk_soc)';
 		$id_field = MAIN_DB_PREFIX.'propal.rowid';
 	}
 	elseif($type == 'supplier_order') {
-		$table = array(MAIN_DB_PREFIX.'commande_fournisseur',MAIN_DB_PREFIX.'commande_fournisseur_extrafields',MAIN_DB_PREFIX.'commande_fournisseurdet',MAIN_DB_PREFIX.'commande_fournisseurdet_extrafields');
+		$table = array(MAIN_DB_PREFIX.'commande_fournisseur',MAIN_DB_PREFIX.'commande_fournisseur_extrafields',MAIN_DB_PREFIX.'commande_fournisseurdet',MAIN_DB_PREFIX.'commande_fournisseurdet_extrafields', MAIN_DB_PREFIX.'societe');
 		$objname = 'CommandeFournisseur';
 		$complete_label = false;
 		$sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'commande_fournisseur_extrafields ON ('.MAIN_DB_PREFIX.'commande_fournisseur.rowid = '.MAIN_DB_PREFIX.'commande_fournisseur_extrafields.fk_object)';
 		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'commande_fournisseurdet ON ('.MAIN_DB_PREFIX.'commande_fournisseur.rowid = '.MAIN_DB_PREFIX.'commande_fournisseurdet.fk_commande)';
 		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'commande_fournisseurdet_extrafields ON ('.MAIN_DB_PREFIX.'commande_fournisseurdet.rowid = '.MAIN_DB_PREFIX.'commande_fournisseurdet_extrafields.fk_object)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'societe ON ('.MAIN_DB_PREFIX.'societe.rowid = '.MAIN_DB_PREFIX.'commande_fournisseur.fk_soc)';
 		$id_field = MAIN_DB_PREFIX.'commande_fournisseur.rowid';
 	}
 	elseif($type == 'invoice') {
-		$table = array(MAIN_DB_PREFIX.'facture',MAIN_DB_PREFIX.'facture_extrafields',MAIN_DB_PREFIX.'facturedet',MAIN_DB_PREFIX.'facturedet_extrafields');
+		$table = array(MAIN_DB_PREFIX.'facture',MAIN_DB_PREFIX.'facture_extrafields',MAIN_DB_PREFIX.'facturedet',MAIN_DB_PREFIX.'facturedet_extrafields', MAIN_DB_PREFIX.'societe');
 		$objname = 'Facture';
 		$complete_label = false;
 		$sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'facture_extrafields ON ('.MAIN_DB_PREFIX.'facture.rowid = '.MAIN_DB_PREFIX.'facture_extrafields.fk_object)';
 		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'facturedet ON ('.MAIN_DB_PREFIX.'facture.rowid = '.MAIN_DB_PREFIX.'facturedet.fk_facture)';
 		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'facturedet_extrafields ON ('.MAIN_DB_PREFIX.'facturedet.rowid = '.MAIN_DB_PREFIX.'facturedet_extrafields.fk_object)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'societe ON ('.MAIN_DB_PREFIX.'societe.rowid = '.MAIN_DB_PREFIX.'facture.fk_soc)';
 		$id_field = MAIN_DB_PREFIX.'facture.rowid';
 	}
 	elseif($type == 'contact') {
-		$table = MAIN_DB_PREFIX.'socpeople';
+		$id_field = MAIN_DB_PREFIX.'socpeople.rowid';
+		$table = array(MAIN_DB_PREFIX.'socpeople', MAIN_DB_PREFIX.'societe');
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'societe ON ('.MAIN_DB_PREFIX.'societe.rowid = '.MAIN_DB_PREFIX.'socpeople.fk_soc)';
 
 		$complete_label = false;
+	}
+	elseif($type == 'expedition')
+	{
+		$id_field = MAIN_DB_PREFIX.'expedition.rowid';
+		$table = array(MAIN_DB_PREFIX.'expedition', MAIN_DB_PREFIX.'societe');
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'societe ON ('.MAIN_DB_PREFIX.'societe.rowid = '.MAIN_DB_PREFIX.'expedition.fk_soc)';
+
 	}
 
 	$table=(Array)$table;

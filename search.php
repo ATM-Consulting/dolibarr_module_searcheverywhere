@@ -7,6 +7,7 @@
 	$langs->load('searcheverywhere@searcheverywhere');
 	
 	$keyword = GETPOST('keyword');
+	if (empty($keyword)) $keyword=GETPOST('sall');
 	
 	llxHeader('', $langs->trans('Searcheverywhere'), '', '', 0, 0, array('/searcheverywhere/js/jquery.tile.min.js')  );
 	$head = searcheverywhere_prepare_head($keyword);
@@ -58,7 +59,18 @@
 
 	<script type="text/javascript">
 		var url = "<?php echo dol_buildpath('/searcheverywhere/search.php?keyword=', 1) ?>";
-		var TSearch = ['product','company','contact','propal','order','invoice','projet','task','event','expedition','supplier_order'];
+		var TSearch = [
+			'product',
+			'company',
+			'contact',
+			<?php if ($conf->propal->enabled) echo "'propal',"; ?>
+			<?php if ($conf->commande->enabled) echo "'order',"; ?>
+			<?php if ($conf->facture->enabled) echo "'invoice',"; ?>
+			<?php if ($conf->projet->enabled) echo "'projet','task',"; ?>
+			<?php if ($conf->agenda->enabled) echo "'event',"; ?>
+			<?php if ($conf->expedition->enabled) echo "'expedition',"; ?>
+			<?php if ($conf->fournisseur->enabled) echo "'supplier_order',"; ?>
+		];
 	
 		$(document).ready(function() {
 			
