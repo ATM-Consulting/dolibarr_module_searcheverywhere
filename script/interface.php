@@ -63,8 +63,6 @@
 			break;
 	}
 
-
-
 function _search($type, $keyword, $asArray=false) {
 	global $db, $conf, $langs;
 
@@ -222,7 +220,6 @@ function _search($type, $keyword, $asArray=false) {
 
 
 			}
-
 		}else{
 			$res = $db->query('DESCRIBE '.$table1);
 
@@ -250,10 +247,6 @@ function _search($type, $keyword, $asArray=false) {
 
 			}
 		}
-
-
-
-
 	}
 
     $sql = 'SELECT DISTINCT '.$id_field.' as rowid FROM '.$table[0].' '.$sql_join.' WHERE ('.$sql_where.') ';
@@ -272,7 +265,7 @@ function _search($type, $keyword, $asArray=false) {
 	if(!$asArray) print '<table class="border" width="100%"><tr class="liste_titre"><td colspan="2">'.$langs->trans( $libelle ).' <span class="badge">'.$nb_results.'</span></td></tr>';
 
 	if($nb_results == 0) {
-	    if(!$asArray) 	print '<td colspan="2">Pas de résultat</td>';
+	    if(!$asArray) 	print '<td colspan="2" class="center">'.$langs->trans("NoResults").'</td>'; // Pas de résultat
 	}
 	else{
 		while($obj = $db->fetch_object($res)) {
@@ -340,7 +333,6 @@ function _search($type, $keyword, $asArray=false) {
 		}
 
 	}
-
 
 	if(!$asArray) print '</table>';
     else return $TResult;
