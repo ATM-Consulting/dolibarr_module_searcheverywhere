@@ -98,7 +98,7 @@ class ActionsSearcheverywhere
 	}
 
 	function addSearchEntry($parameters, &$object, &$action, $hookmanager) {
-		global $langs, $db;
+		global $langs, $db, $conf;
 
 		if (in_array('searchform',explode(':',$parameters['context'])) && DOL_VERSION > 3.8 && empty($conf->global->SEARCHEVERYWHERE_SEARCH_PREVIEW)) {
 			$search_boxvalue = $parameters['search_boxvalue'];

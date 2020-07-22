@@ -62,8 +62,6 @@ class searcheverywherebox extends ModeleBoxes
 
         $this->max = $max;
 
-        //include_once DOL_DOCUMENT_ROOT . "/searcheverywhere/class/searcheverywhere.class.php";
-
         $text = $langs->trans("MyBoxDescription", $max);
         $this->info_box_head = array(
             'text' => $text,
