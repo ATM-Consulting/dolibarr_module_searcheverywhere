@@ -204,7 +204,7 @@ class modsearcheverywhere extends DolibarrModules
         $r = 0;
         // Example:
 
-        $this->boxes[$r][1] = "searcheverywhere_box@searcheverywhere";
+//        $this->boxes[$r][1] = "searcheverywhere_box@searcheverywhere";
         $r ++;
         /*
           $this->boxes[$r][1] = "myboxb.php";
