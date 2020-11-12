@@ -109,12 +109,12 @@ class ActionsSearcheverywhere
 			$modSearch = new modsearcheverywhere($db);
 
 			$this->results = array(
-				'searcheverywhere' => array(
-					'position' => $modSearch->numero,
-					'img'=>'object_searcheverywhere'
-					,'label'=>$langs->trans('Searcheverywhere')
-					,'text'=>img_picto('','object_searcheverywhere@searcheverywhere').' '.$langs->trans('Searcheverywhere')
-					,'url'=>dol_buildpath('/searcheverywhere/search.php',1).'?keyword='.urlencode($search_boxvalue)
+				'searchintosearcheverywhere' => array(
+					'position' => 600,
+					'img'      => 'object_searcheverywhere',
+					'label'    => $langs->trans( 'Searcheverywhere' ),
+					'text'     => img_picto( '', 'object_searcheverywhere@searcheverywhere' ) . ' ' . $langs->trans( 'Searcheverywhere' ),
+					'url'      => dol_buildpath('/searcheverywhere/search.php',1).'?keyword='.urlencode($search_boxvalue),
 				)
 			);
 		}
