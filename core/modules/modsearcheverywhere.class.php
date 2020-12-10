@@ -64,7 +64,7 @@ class modsearcheverywhere extends DolibarrModules
         // (where XXX is value of numeric property 'numero' of module)
         $this->description = "Description of module searcheverywhere";
         // Possible values for version are: 'development', 'experimental' or version
-        $this->version = '1.3.1';
+        $this->version = '1.3.2';
         // Key used in llx_const table to save module status enabled/disabled
         // (where MYMODULE is value of property name of module in uppercase)
         $this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
@@ -422,9 +422,6 @@ class modsearcheverywhere extends DolibarrModules
         $sql = array();
 
         $result = $this->loadTables();
-
-        $url = dol_buildpath('/searcheverywhere/script/create-maj-base.php', 2);
-        file_get_contents($url);
 
         return $this->_init($sql, $options);
     }
