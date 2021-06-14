@@ -1,6 +1,7 @@
 <?php
 
-	if (! defined('NOTOKENRENEWAL')) define('NOTOKENRENEWAL','1'); // Disables token renewal
+
+	if(!defined('NOTOKENRENEWAL')) define('NOTOKENRENEWAL', 1);
 
 	require('../config.php');
 
