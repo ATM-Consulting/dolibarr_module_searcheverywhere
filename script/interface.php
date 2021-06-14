@@ -1,6 +1,7 @@
 <?php
 
 	if(!defined('NOTOKENRENEWAL')) define('NOTOKENRENEWAL', 1);
+
 	require('../config.php');
 
 	dol_include_once('/product/class/product.class.php');
