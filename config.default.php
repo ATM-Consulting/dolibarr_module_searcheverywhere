@@ -1,5 +1,5 @@
 <?php
-	
+
 	if(is_file('../main.inc.php'))$dir = '../';
 	else  if(is_file('../../../main.inc.php'))$dir = '../../../';
 	else $dir = '../../';
@@ -20,6 +20,6 @@ if(!defined('DB_HOST')) {
     define('DB_PASS',$dolibarr_main_db_pass);
     define('DB_DRIVER',$dolibarr_main_db_type);
 }
-if(($conf->of->enabled || $conf->nomenclature->enabled ||$conf->workstation->enabled ||$conf->configurateur->enabled) && !dol_include_once('/abricot/inc.core.php')) {
+if(($conf->of->enabled || $conf->nomenclature->enabled ||$conf->workstationatm->enabled ||$conf->configurateur->enabled) && !dol_include_once('/abricot/inc.core.php')) {
     require __DIR__.'/class/listview.class.php'; // why not ? ;)
 }

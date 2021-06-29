@@ -16,7 +16,7 @@
 	dol_include_once('/expedition/class/expedition.class.php');
 	if($conf->of->enabled) dol_include_once('/of/class/ordre_fabrication_asset.class.php');
 	if($conf->nomenclature->enabled) dol_include_once('/nomenclature/class/nomenclature.class.php');
-	if($conf->workstation->enabled) dol_include_once('/workstation/class/workstation.class.php');
+	if($conf->workstationatm->enabled) dol_include_once('/workstationatm/class/workstation.class.php');
 	if($conf->configurateur->enabled) dol_include_once('/configurateur/class/configurateur.class.php');
 
 	$langs->load('searcheverywhere@searcheverywhere');
@@ -47,7 +47,7 @@
 			if ($conf->fournisseur->enabled) $TObjectType[] = 'supplier_order';
 			if ($conf->of->enabled) $TObjectType[] = 'of';
 			if ($conf->nomenclature->enabled) $TObjectType[] = 'nomenclature';
-			if ($conf->workstation->enabled) $TObjectType[] = 'workstation';
+			if ($conf->workstationatm->enabled) $TObjectType[] = 'workstation';
 			if ($conf->configurateur->enabled) $TObjectType[] = 'configurateur';
 
 		    $conf->global->SEARCHEVERYWHERE_NB_ROWS = 5;
@@ -74,7 +74,7 @@ function _search($type, $keyword, $asArray=false) {
 	$complete_label = true;
 	$show_find_field = false;
 	$sql_join = '';
-    if($conf->of->enabled || $conf->nomenclature->enabled ||$conf->workstation->enabled) {
+    if($conf->of->enabled || $conf->nomenclature->enabled ||$conf->workstationatm->enabled) {
         $PDOdb = new TPDOdb;
     }
 
