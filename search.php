@@ -2,12 +2,12 @@
 	require 'config.php';
 	dol_include_once('/core/lib/functions.lib.php');
 	dol_include_once('/searcheverywhere/lib/searcheverywhere.lib.php');
-	
+
 	$langs->load('searcheverywhere@searcheverywhere');
-	
+
 	$keyword = GETPOST('keyword');
 	if (empty($keyword)) $keyword=GETPOST('sall');
-	
+
 	llxHeader('', $langs->trans('Searcheverywhere'), '', '', 0, 0, array('/searcheverywhere/js/jquery.tile.min.js')  );
 	$head = searcheverywhere_prepare_head($keyword);
 	dol_fiche_head($head, 'search', $langs->trans('Searcheverywhere'), 0, 'searcheverywhere@searcheverywhere');
@@ -17,7 +17,7 @@
 			position:relative;
 			margin-top:15px;
 		}
-		
+
 		#results span.loading {
 			padding : 20px;
 			background-color: #f64f1c;
@@ -26,7 +26,7 @@
 			left:50px;
 			position:relative;
 		}
-		
+
 		#results div.result {
 			width:300px;
 			float:left;
@@ -40,7 +40,7 @@
 			font-weight: bold;
 		}
 	</style>
-	
+
 	<input type="text" name="keyword" id="keyword" value="" />
 	<input type="button" name="btsearch" id="btsearch" value="<?php print $langs->trans('Search'); ?>" />
 	<div id="results"></div>
@@ -60,17 +60,17 @@
 			<?php if ($conf->fournisseur->enabled) echo "'supplier_order',"; ?>
 			<?php if ($conf->of->enabled) echo "'of',"; ?>
 			<?php if ($conf->nomenclature->enabled) echo "'nomenclature',"; ?>
-			<?php if ($conf->workstation->enabled) echo "'workstation',"; ?>
+			<?php if ($conf->workstationatm->enabled) echo "'workstation',"; ?>
 			<?php if ($conf->configurateur->enabled) echo "'configurateur',"; ?>
 		];
-	
+
 		$(document).ready(function() {
 			$("#btsearch").click(function() {
 				var keyword = $("#keyword").val();
 
 				$('#results').html("<span class=\"loading\"><?php echo $langs->trans('Loading'); ?>...</span>");
 				$('a#search').attr('href', url+keyword);
-				
+
 				for(x in TSearch) {
 					$.ajax({
 						url : "./script/interface.php"
@@ -79,15 +79,15 @@
 							,type:TSearch[x]
 							,keyword : keyword
 						}
-						
+
 					}).done(function(data) {
 						$('#results span.loading').remove();
-						
+
 						$div = $('<div class="result" />');
 						$div.append(data);
-						
+
 						$('#results').append($div);
-						
+
 						$('#results div.result').tile();
 						jQuery("#results div.result .classfortooltip").tipTip({maxWidth: "600px", edgeOffset: 10, delay: 50, fadeIn: 50, fadeOut: 50});
 					})
