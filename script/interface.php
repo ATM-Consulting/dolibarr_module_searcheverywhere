@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined('NOTOKENRENEWAL')) define('NOTOKENRENEWAL', 1);
+	if (!defined("NOCSRFCHECK")) define('NOCSRFCHECK', 1);
+	if (!defined('NOTOKENRENEWAL')) define('NOTOKENRENEWAL', 1);
 
 	require('../config.php');
 

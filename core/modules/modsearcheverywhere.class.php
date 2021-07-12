@@ -42,7 +42,7 @@ class modsearcheverywhere extends DolibarrModules
 
         $this->db = $db;
 
-	    $this->editor_name = 'ATM-Consulting';
+	    $this->editor_name = 'ATM Consulting';
 	    $this->editor_url = 'https://www.atm-consulting.fr';
 
         // Id for module (must be unique).
@@ -54,7 +54,7 @@ class modsearcheverywhere extends DolibarrModules
 
         // Family can be 'crm','financial','hr','projects','products','ecm','technic','other'
         // It is used to group modules in module setup page
-        $this->family = "ATM";
+        $this->family = "ATM Consulting - Autre";
         // Module label (no space allowed)
         // used if translation string 'ModuleXXXName' not found
         // (where XXX is value of numeric property 'numero' of module)
