@@ -65,10 +65,8 @@ class modsearcheverywhere extends DolibarrModules
         $this->description = "Description of module searcheverywhere";
         // Possible values for version are: 'development', 'experimental' or version
 
-        $this->version = '2.1.0';
-		// Url to the file with your last numberversion of this module
-		require_once __DIR__ . '/../../class/techatm.class.php';
-		$this->url_last_version = \searcheverywhere\TechATM::getLastModuleVersionUrl($this);
+        $this->version = '2.0.2';
+
         // Key used in llx_const table to save module status enabled/disabled
         // (where MYMODULE is value of property name of module in uppercase)
         $this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
