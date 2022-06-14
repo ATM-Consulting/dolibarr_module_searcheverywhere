@@ -19,7 +19,7 @@ class ActionsSearcheverywhere
 			$newToken = function_exists('newToken') ? newToken() : $_SESSION['newtoken'];
 			$res.='<form method="post" action="'.dol_buildpath('/searcheverywhere/search.php',1).'">';
 			$res.= '<input type="hidden" name="token" value="'.$newToken.'">';
-			$res.= '<div class="menu_titre menu_titre_search"><label for="sew_keyword"><a class="vsmenu" href="'.dol_buildpath('/searcheverywhere/search.php',1).'">'.img_object($langs->trans('searcheverywhere'),'searcheverywhere@searcheverywhere').' '.$langs->trans('Searcheverywhere').'</a></label></div>';
+			$res.= '<div class="menu_titre menu_titre_search"><label for="sew_keyword"><a class="vsmenu" href="'.dol_buildpath('/searcheverywhere/search.php',1).'&token='.$newToken.'">'.img_object($langs->trans('searcheverywhere'),'searcheverywhere@searcheverywhere').' '.$langs->trans('Searcheverywhere').'</a></label></div>';
 			$res.= '	<input type="text" size="10" name="keyword" title="'.$langs->trans('Keyword').'" class="flat" id="sew_keyword" /><input type="submit" value="'.$langs->trans('Go').'" class="button">
 				</form>';
 
