@@ -82,7 +82,7 @@ class modsearcheverywhere extends DolibarrModules
         // use this->picto='pictovalue'
         // If file is in module/img directory under name object_pictovalue.png
         // use this->picto='pictovalue@module'
-        $this->picto = 'searcheverywhere@searcheverywhere'; // mypicto@searcheverywhere
+        $this->picto = 'searcheverywhere.svg@searcheverywhere'; // mypicto@searcheverywhere
         // Defined all module parts (triggers, login, substitutions, menus, css, etc...)
         // for default path (eg: /searcheverywhere/core/xxxxx) (0=disable, 1=enable)
         // for specific path of parts (eg: /searcheverywhere/core/modules/barcode)

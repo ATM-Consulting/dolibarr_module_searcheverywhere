@@ -6,7 +6,7 @@
 
 # 2.1
 
-- NEW : Ajout de la class TechATM pour l'affichage de la page "A propos" *11/05/2022* 2.1.0
+- NEW : Ajout de la class TechATM pour l'affichage de la page "A propos" + icons *11/05/2022* 2.1.0
 
 # 2.0
 
