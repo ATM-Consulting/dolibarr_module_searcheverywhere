@@ -15,10 +15,10 @@
 	dol_include_once('/commande/class/commande.class.php');
 	dol_include_once('/fourn/class/fournisseur.commande.class.php');
 	dol_include_once('/expedition/class/expedition.class.php');
-	if($conf->of->enabled) dol_include_once('/of/class/ordre_fabrication_asset.class.php');
-	if($conf->nomenclature->enabled) dol_include_once('/nomenclature/class/nomenclature.class.php');
-	if($conf->workstationatm->enabled) dol_include_once('/workstationatm/class/workstation.class.php');
-	if($conf->configurateur->enabled) dol_include_once('/configurateur/class/configurateur.class.php');
+	if(!empty($conf->of->enabled)) dol_include_once('/of/class/ordre_fabrication_asset.class.php');
+	if(!empty($conf->nomenclature->enabled)) dol_include_once('/nomenclature/class/nomenclature.class.php');
+	if(!empty($conf->workstationatm->enabled)) dol_include_once('/workstationatm/class/workstation.class.php');
+	if(!empty($conf->configurateur->enabled)) dol_include_once('/configurateur/class/configurateur.class.php');
 
 	$langs->load('searcheverywhere@searcheverywhere');
 	$langs->load('orders');
@@ -75,7 +75,7 @@ function _search($type, $keyword, $asArray=false) {
 	$complete_label = true;
 	$show_find_field = false;
 	$sql_join = '';
-    if($conf->of->enabled || $conf->nomenclature->enabled ||$conf->workstationatm->enabled) {
+    if(!empty($conf->of->enabled) || !empty($conf->nomenclature->enabled) ||!empty($conf->workstationatm->enabled)) {
         $PDOdb = new TPDOdb;
     }
 
