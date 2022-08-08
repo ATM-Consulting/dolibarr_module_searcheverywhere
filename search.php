@@ -49,20 +49,20 @@
 		var url = "<?php echo dol_buildpath('/searcheverywhere/search.php?keyword=', 1) ?>";
 		var TSearch = [
 			'product',
-			'company',
-			'contact',
-			<?php if ($conf->propal->enabled) echo "'propal',"; ?>
-			<?php if ($conf->commande->enabled) echo "'order',"; ?>
-			<?php if ($conf->facture->enabled) echo "'invoice',"; ?>
-			<?php if ($conf->projet->enabled) echo "'projet','task',"; ?>
-			<?php if ($conf->agenda->enabled) echo "'event',"; ?>
-			<?php if ($conf->expedition->enabled) echo "'expedition',"; ?>
-			<?php if ($conf->fournisseur->enabled) echo "'supplier_order',"; ?>
-			<?php if ($conf->of->enabled) echo "'of',"; ?>
-			<?php if ($conf->nomenclature->enabled) echo "'nomenclature',"; ?>
-			<?php if ($conf->workstationatm->enabled) echo "'workstation',"; ?>
-			<?php if ($conf->configurateur->enabled) echo "'configurateur',"; ?>
-		];
+            'company',
+            'contact',
+			<?php if(! empty($conf->propal->enabled)) echo "'propal',"; ?>
+			<?php if(! empty($conf->commande->enabled)) echo "'order',"; ?>
+			<?php if(! empty($conf->facture->enabled)) echo "'invoice',"; ?>
+			<?php if(! empty($conf->projet->enabled)) echo "'projet','task',"; ?>
+			<?php if(! empty($conf->agenda->enabled)) echo "'event',"; ?>
+			<?php if(! empty($conf->expedition->enabled)) echo "'expedition',"; ?>
+			<?php if(! empty($conf->fournisseur->enabled)) echo "'supplier_order',"; ?>
+			<?php if(! empty($conf->of->enabled)) echo "'of',"; ?>
+			<?php if(! empty($conf->nomenclature->enabled)) echo "'nomenclature',"; ?>
+			<?php if(! empty($conf->workstationatm->enabled)) echo "'workstation',"; ?>
+			<?php if(! empty($conf->configurateur->enabled)) echo "'configurateur',"; ?>
+        ];
 
 		$(document).ready(function() {
 			$("#btsearch").click(function() {
