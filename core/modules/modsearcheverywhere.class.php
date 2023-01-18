@@ -65,7 +65,7 @@ class modsearcheverywhere extends DolibarrModules
         $this->description = "Description of module searcheverywhere";
         // Possible values for version are: 'development', 'experimental' or version
 
-        $this->version = '2.1.1';
+        $this->version = '2.1.2';
 
 		// Url to the file with your last numberversion of this module
 		require_once __DIR__ . '/../../class/techatm.class.php';
