@@ -102,7 +102,7 @@ class ActionsSearcheverywhere
 		global $langs, $db, $conf;
 
 		if (in_array('searchform',explode(':',$parameters['context'])) && DOL_VERSION > 3.8 && empty($conf->global->SEARCHEVERYWHERE_SEARCH_PREVIEW)) {
-			$search_boxvalue = $parameters['search_boxvalue'];
+			$search_boxvalue = $parameters['search_all'];
 
 			$langs->load('searcheverywhere@searcheverywhere');
 
