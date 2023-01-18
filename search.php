@@ -7,6 +7,7 @@
 
 	$keyword = GETPOST('keyword');
 	if (empty($keyword)) $keyword=GETPOST('sall');
+	if (empty($keyword)) $keyword=GETPOST('search_all');
 
 	llxHeader('', $langs->trans('Searcheverywhere'), '', '', 0, 0, array('/searcheverywhere/js/jquery.tile.min.js')  );
 	$head = searcheverywhere_prepare_head($keyword);
@@ -89,7 +90,7 @@
 						$('#results').append($div);
 
 						$('#results div.result').tile();
-						jQuery("#results div.result .classfortooltip").tipTip({maxWidth: "600px", edgeOffset: 10, delay: 50, fadeIn: 50, fadeOut: 50});
+						jQuery("#results div.result .classfortooltip").tooltip({maxWidth: "600px", edgeOffset: 10, delay: 50, fadeIn: 50, fadeOut: 50});
 					})
 				}
 			});
