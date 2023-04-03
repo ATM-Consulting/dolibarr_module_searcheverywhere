@@ -1,7 +1,7 @@
 
 
 ## NOT RELEASED
-
+- NEW : Add es_ES language - *07/03/2023*
 
 
 # 2.1
