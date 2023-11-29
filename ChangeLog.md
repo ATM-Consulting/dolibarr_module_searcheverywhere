@@ -2,6 +2,8 @@
 
 ## NOT RELEASED
 
+# 2.2
+- FIX : Compat v19 *29/11/2023* 2.2.0
 
 
 # 2.1
