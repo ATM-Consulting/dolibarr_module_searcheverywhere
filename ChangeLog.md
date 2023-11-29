@@ -1,10 +1,10 @@
 
 
 ## NOT RELEASED
+- NEW : Add es_ES language - *07/03/2023*
 
 # 2.2
 - FIX : Compat v19 *29/11/2023* 2.2.0
-
 
 # 2.1
 - FIX : Filtre l'affichage si l'utilisateur est externe *21/02/2023* - 2.1.3

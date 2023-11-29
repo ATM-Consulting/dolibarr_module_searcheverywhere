@@ -227,6 +227,7 @@ function _search($type, $keyword, $asArray=false) {
 			$res = $db->query('DESCRIBE '.$table1);
 
 			while($tbl = $db->fetch_object($res)) {
+				if ($tbl->Type == 'timestamp') continue;	// Fix for MySQL >= V8.0.16 - see https://bugs.mysql.com/bug.php?id=95466
 				$fieldname = $tbl->Field;
 				//var_dump($tbl);
 				$sql_fields .=','. $table1.'.'.$fieldname.' as '.$table1.'_'.$fieldname;
