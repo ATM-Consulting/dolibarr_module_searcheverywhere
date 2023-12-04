@@ -253,13 +253,13 @@ function _search($type, $keyword, $asArray=false) {
 		}
 	}
     $sql = 'SELECT DISTINCT '.$id_field.' as rowid FROM '.$table[0].' '.$sql_join.' WHERE ('.$sql_where.') ';
-    if(!empty($conf->global->SEARCHEVERYWHERE_SEARCH_ONLY_IN_ENTITY)) $sql.= 'AND '.$table[0].'.entity = '.$conf->entity.' ';
+    if(getDolGlobalString('SEARCHEVERYWHERE_SEARCH_ONLY_IN_ENTITY')) $sql.= 'AND '.$table[0].'.entity = '.$conf->entity.' ';
 
 	if($user->socid > 0){
 		$sql.= ' AND llx_societe.rowid='.$user->socid;
 	}
 
-	if(!empty($conf->global->SEARCHEVERYWHERE_NB_ROWS)) $sql.= ' LIMIT '.$conf->global->SEARCHEVERYWHERE_NB_ROWS;
+	if(getDolGlobalString('SEARCHEVERYWHERE_NB_ROWS')) $sql.= ' LIMIT ' . getDolGlobalString('SEARCHEVERYWHERE_NB_ROWS');
 	else $sql.= ' LIMIT 20 ';
 	//print $sql;
 	$res = $db->query($sql);

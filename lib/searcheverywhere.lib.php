@@ -25,7 +25,7 @@
 
 function searcheverywhereAdminPrepareHead()
 {
-    global $langs, $conf;
+    global $langs, $conf, $object;
 
     $langs->load("searcheverywhere@searcheverywhere");
 
