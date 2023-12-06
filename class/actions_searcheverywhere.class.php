@@ -10,8 +10,7 @@ class ActionsSearcheverywhere
 	function printSearchForm($parameters, &$object, &$action, $hookmanager) {
 		global $langs,$db,$conf;
 
-		if (in_array('searchform',explode(':',$parameters['context'])) && (DOL_VERSION <= 3.8
-		      || !empty($conf->global->SEARCHEVERYWHERE_SEARCH_PREVIEW) ))
+		if (in_array('searchform',explode(':',$parameters['context'])) && (floatval(DOL_VERSION) <= 3.8 || !empty($conf->global->SEARCHEVERYWHERE_SEARCH_PREVIEW) ))
 		{
 			$langs->load('searcheverywhere@searcheverywhere');
 
@@ -101,7 +100,7 @@ class ActionsSearcheverywhere
 	function addSearchEntry($parameters, &$object, &$action, $hookmanager) {
 		global $langs, $db, $conf;
 
-		if (in_array('searchform',explode(':',$parameters['context'])) && DOL_VERSION > 3.8 && empty($conf->global->SEARCHEVERYWHERE_SEARCH_PREVIEW)) {
+		if (in_array('searchform',explode(':',$parameters['context'])) && floatval(DOL_VERSION) > 3.8 && empty($conf->global->SEARCHEVERYWHERE_SEARCH_PREVIEW)) {
 			$search_boxvalue = $parameters['search_all'];
 
 			$langs->load('searcheverywhere@searcheverywhere');
