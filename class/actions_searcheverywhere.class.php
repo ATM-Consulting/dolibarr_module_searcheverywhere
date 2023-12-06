@@ -112,9 +112,9 @@ class ActionsSearcheverywhere
 			$this->results = array(
 				'searchintosearcheverywhere' => array(
 					'position' => 600,
-					'img'      => 'object_searcheverywhere',
+					'img'      => 'fontawesome_search_fas',
 					'label'    => $langs->trans( 'Searcheverywhere' ),
-					'text'     => img_picto( '', 'object_searcheverywhere@searcheverywhere' ) . ' ' . $langs->trans( 'Searcheverywhere' ),
+					'text'     => img_picto( '', 'fontawesome_search_fas' ) . ' ' . $langs->trans( 'Searcheverywhere' ),
 					'url'      => dol_buildpath('/searcheverywhere/search.php',1).'?keyword='.urlencode($search_boxvalue),
 				)
 			);
