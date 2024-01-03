@@ -4,7 +4,7 @@
 
 
 
-# 2.1
+# 2.2
 
 - FIX : DropDown menu icon *02/01/2024* 2.2.1
 - FIX : Compat v19 *29/11/2023* 2.2.0
