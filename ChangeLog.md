@@ -2,6 +2,7 @@
 
 ## NOT RELEASED
 
+- FIX : DropDown menu icon *02/01/2024* 2.2.1
 - FIX : Compat v19 *29/11/2023* 2.2.0
 - NEW : Add es_ES language - *07/03/2023*
 
