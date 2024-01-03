@@ -1,5 +1,7 @@
 <?php
-class ActionsSearcheverywhere
+
+require_once __DIR__ . '/../backport/v19/core/class/commonhookactions.class.php';
+class ActionsSearcheverywhere extends \searcheverywhere\RetroCompatCommonHookActions
 {
 	/** Overloading the doActions function : replacing the parent's function with the one below
 	 *  @param	  parameters  meta datas of the hook (context, etc...)
@@ -10,8 +12,8 @@ class ActionsSearcheverywhere
 	function printSearchForm($parameters, &$object, &$action, $hookmanager) {
 		global $langs,$db,$conf;
 
-		if (in_array('searchform',explode(':',$parameters['context'])) && (DOL_VERSION <= 3.8
-		      || !empty($conf->global->SEARCHEVERYWHERE_SEARCH_PREVIEW) ))
+		if (in_array('searchform',explode(':',$parameters['context'])) && (floatval(DOL_VERSION) <= 3.8
+		      || getDolGlobalString('SEARCHEVERYWHERE_SEARCH_PREVIEW') ))
 		{
 			$langs->load('searcheverywhere@searcheverywhere');
 
@@ -23,7 +25,7 @@ class ActionsSearcheverywhere
 			$res.= '	<input type="text" size="10" name="keyword" title="'.$langs->trans('Keyword').'" class="flat" id="sew_keyword" /><input type="submit" value="'.$langs->trans('Go').'" class="button">
 				</form>';
 
-			if(!empty($conf->global->SEARCHEVERYWHERE_SEARCH_PREVIEW) ) {
+			if(getDolGlobalString('SEARCHEVERYWHERE_SEARCH_PREVIEW') ) {
 
                 $res.= '<script type="text/javascript">
                 $("#sew_keyword").autocomplete({
@@ -101,7 +103,7 @@ class ActionsSearcheverywhere
 	function addSearchEntry($parameters, &$object, &$action, $hookmanager) {
 		global $langs, $db, $conf;
 
-		if (in_array('searchform',explode(':',$parameters['context'])) && DOL_VERSION > 3.8 && empty($conf->global->SEARCHEVERYWHERE_SEARCH_PREVIEW)) {
+		if (in_array('searchform',explode(':',$parameters['context'])) && floatval(DOL_VERSION) > 3.8 && !getDolGlobalString('SEARCHEVERYWHERE_SEARCH_PREVIEW')) {
 			$search_boxvalue = $parameters['search_all'];
 
 			$langs->load('searcheverywhere@searcheverywhere');

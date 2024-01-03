@@ -1,0 +1,17 @@
+Module104790Name = Búsqueda global
+Module104790Desc = Permite realizar una búsqueda global en todos los campos de la base de datos
+
+ATMAbout = Este módulo se ha desarrolado por <a href="http://www.atm-consulting.fr" target="_blank">ATM Consulting</a><br>Puedes encontrar la documentación en la <a href="http://wiki.atm-consulting.fr/index.php/Accueil" target="_blank">wiki</a><br><br>Para cualquier pregunta o sugerencia, contáctanos en <a href="mailto:support@atm-consulting.fr">support@atm-consulting.fr</a><br><br>Para cualquier pregunta comercial, contáctanos en <a href="mailto:contact@atm-consulting.fr">contact@atm-consulting.fr</a> o en el teléfono +33 9 77 19 50 70<br><br>Encuentra otros módulos en <a href="http://www.dolistore.com/search.php?orderby=position&orderway=desc&search_query=atm&submit_search=Rechercher" target="_blank">Dolistore</a>
+
+Searcheverywhere=Búsqueda global
+ActionComm=Agenda
+Propal=Presupuesto
+Task=Tarea
+Societe=Cliente/Potencial/Proveedor
+Product=Producto
+SearchInfo=(Búsqueda estricta por defecto, añade % para una búsqueda genérica - ejemplo : 34%96%19%50%69 si quieres ignorar ciertos campos del número de teléfono)
+SearcheverywhereAbout=Sobre
+searcheverywhereSetup=Configuración
+searcheverywhereNoSetupRequired=No se requiere configuración alguna
+searcheverywhereSearchOnlyInEntity=Buscar solamente los datos de la entidad actual
+SEARCHEVERYWHERE_SEARCH_PREVIEW=Previsualización de la búsqueda
