@@ -103,8 +103,8 @@ class ActionsSearcheverywhere extends \searcheverywhere\RetroCompatCommonHookAct
 	function addSearchEntry($parameters, &$object, &$action, $hookmanager) {
 		global $langs, $db, $conf;
 
-		if (in_array('searchform',explode(':',$parameters['context'])) && floatval(DOL_VERSION) > 3.8 && !getDolGlobalString('SEARCHEVERYWHERE_SEARCH_PREVIEW')) {
-			$search_boxvalue = $parameters['search_all'];
+		if (in_array('searchform',explode(':',$parameters['context'])) && floatval(DOL_VERSION) > 3.8 && getDolGlobalInt('SEARCHEVERYWHERE_SEARCH_PREVIEW')) {
+			$search_boxvalue = $parameters['search_all'] ?? '';
 
 			$langs->load('searcheverywhere@searcheverywhere');
 
@@ -114,9 +114,9 @@ class ActionsSearcheverywhere extends \searcheverywhere\RetroCompatCommonHookAct
 			$this->results = array(
 				'searchintosearcheverywhere' => array(
 					'position' => 600,
-					'img'      => 'fontawesome_search_fas',
+					'img'      => floatval(DOL_VERSION) >= 18 ? 'fontawesome_search_fas' : 'object_searcheverywhere',
 					'label'    => $langs->trans( 'Searcheverywhere' ),
-					'text'     => img_picto( '', 'fontawesome_search_fas' ) . ' ' . $langs->trans( 'Searcheverywhere' ),
+					'text'     => img_picto( '', floatval(DOL_VERSION) >= 18 ? 'fontawesome_search_fas' : 'object_searcheverywhere@searcheverywhere' ) . ' ' . $langs->trans( 'Searcheverywhere' ),
 					'url'      => dol_buildpath('/searcheverywhere/search.php',1).'?keyword='.urlencode($search_boxvalue),
 				)
 			);
