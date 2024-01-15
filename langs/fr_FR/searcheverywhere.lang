@@ -15,3 +15,4 @@ searcheverywhereSetup=Configuration
 searcheverywhereNoSetupRequired=Aucune configuration requise
 searcheverywhereSearchOnlyInEntity=Rechercher uniquement les données de l'entité dans laquelle on se trouve
 SEARCHEVERYWHERE_SEARCH_PREVIEW=Utiliser la recherche avec preview
+SEARCHEVERYWHERE_SEARCH_PREVIEW_HELP = Utilisable seulement si la recherche est placée sur le menu de gauche. Attention : cette option peut ralentir le serveur de Base de données.

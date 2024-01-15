@@ -15,3 +15,6 @@ SearcheverywhereAbout = Über
 searcheverywhereSetup = Setup
 searcheverywhereNoSetupRequired = keine Einrichtung erforderlich
 searcheverywhereSearchOnlyInEntity = Nur Daten in aktueller Entität durchsuchen
+Module104790Name = Globale Suche
+SEARCHEVERYWHERE_SEARCH_PREVIEW = Die Suche mit preview nutzen
+SEARCHEVERYWHERE_SEARCH_PREVIEW_HELP = Nur verwendbar, wenn die Suche auf dem linken Menü platziert ist. Achtung: Diese Option kann den Datenbankserver verlangsamen.
