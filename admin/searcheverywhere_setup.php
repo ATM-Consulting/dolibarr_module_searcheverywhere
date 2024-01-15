@@ -90,7 +90,7 @@ print '</td></tr>';
 
 $var=!$var;
 print '<tr '.$bc[$var].'>';
-print '<td>'.$langs->trans("SEARCHEVERYWHERE_SEARCH_PREVIEW").'</td>';
+print '<td>'.$langs->trans("SEARCHEVERYWHERE_SEARCH_PREVIEW").'<br><small>'.$langs->trans("SEARCHEVERYWHERE_SEARCH_PREVIEW_HELP").'</small></td>';
 print '<td align="center" width="20">&nbsp;</td>';
 print '<td align="center" width="300">';
 print ajax_constantonoff('SEARCHEVERYWHERE_SEARCH_PREVIEW');
