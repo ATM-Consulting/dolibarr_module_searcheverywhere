@@ -12,8 +12,7 @@ class ActionsSearcheverywhere extends \searcheverywhere\RetroCompatCommonHookAct
 	function printSearchForm($parameters, &$object, &$action, $hookmanager) {
 		global $langs,$db,$conf;
 
-		if (in_array('searchform',explode(':',$parameters['context'])) && (floatval(DOL_VERSION) <= 3.8
-		      || getDolGlobalString('SEARCHEVERYWHERE_SEARCH_PREVIEW') ))
+		if (in_array('searchform',explode(':',$parameters['context'])))
 		{
 			$langs->load('searcheverywhere@searcheverywhere');
 
@@ -103,7 +102,7 @@ class ActionsSearcheverywhere extends \searcheverywhere\RetroCompatCommonHookAct
 	function addSearchEntry($parameters, &$object, &$action, $hookmanager) {
 		global $langs, $db, $conf;
 
-		if (in_array('searchform',explode(':',$parameters['context'])) && floatval(DOL_VERSION) > 3.8 && getDolGlobalInt('SEARCHEVERYWHERE_SEARCH_PREVIEW')) {
+		if (in_array('searchform',explode(':',$parameters['context']))) {
 			$search_boxvalue = $parameters['search_all'] ?? '';
 
 			$langs->load('searcheverywhere@searcheverywhere');
