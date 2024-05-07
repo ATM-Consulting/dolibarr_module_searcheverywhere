@@ -9,10 +9,13 @@
 	if (empty($keyword)) $keyword=GETPOST('sall');
 	if (empty($keyword)) $keyword=GETPOST('search_all');
 
-	llxHeader('', $langs->trans('Searcheverywhere'), '', '', 0, 0, array('/searcheverywhere/js/jquery.tile.min.js')  );
+	llxHeader('', $langs->trans('Searcheverywhere'), '', '', 0, 0, array('/searcheverywhere/js/jquery.qtip.min.js')  );
 	$head = searcheverywhere_prepare_head($keyword);
 	dol_fiche_head($head, 'search', $langs->trans('Searcheverywhere'), 0, 'searcheverywhere@searcheverywhere');
 	?>
+
+	<link rel="stylesheet" type="text/css" href="js/jquery.qtip.min.css">
+	<script type="text/javascript" src="js/jquery.qtip.min.js"></script>
 	<style type="text/css">
 		#results {
 			position:relative;
@@ -50,8 +53,8 @@
 		var url = "<?php echo dol_buildpath('/searcheverywhere/search.php?keyword=', 1) ?>";
 		var TSearch = [
 			'product',
-            'company',
-            'contact',
+			'company',
+			'contact',
 			<?php if(! empty($conf->propal->enabled)) echo "'propal',"; ?>
 			<?php if(! empty($conf->commande->enabled)) echo "'order',"; ?>
 			<?php if(! empty($conf->facture->enabled)) echo "'invoice',"; ?>
@@ -63,7 +66,7 @@
 			<?php if(! empty($conf->nomenclature->enabled)) echo "'nomenclature',"; ?>
 			<?php if(! empty($conf->workstationatm->enabled)) echo "'workstation',"; ?>
 			<?php if(! empty($conf->configurateur->enabled)) echo "'configurateur',"; ?>
-        ];
+		];
 
 		$(document).ready(function() {
 			$("#btsearch").click(function() {
@@ -86,23 +89,43 @@
 
 						$div = $('<div class="result" />');
 						$div.append(data);
-
 						$('#results').append($div);
+						console.log($('#results div.result'))
 
-						$('#results div.result').tile();
-						jQuery("#results div.result .classfortooltip").tooltip({maxWidth: "600px", edgeOffset: 10, delay: 50, fadeIn: 50, fadeOut: 50});
+
+						jQuery("#results div.result .classfortooltip").each(function() {
+							$(this).qtip({
+								content: {
+									text: false // Use each elements title attribute
+								},
+								position: {
+									my: 'bottom center',
+									at: 'top center',
+									target: $(this) // Use the triggering element as the target
+								},
+								style: {
+									classes: 'qtip-bootstrap' // Use the Bootstrap theme
+								},
+								events: {
+									show: function(event, api) {
+										// Use the event object to position the tooltip if necessary
+									}
+								}
+							});
+						});
 					})
 				}
 			});
 			<?php
-				if($keyword!='') {
-					?>
-					$("#keyword").val("<?php echo $keyword; ?>");
-					$("#btsearch").click();
-					<?php
-				}
+			if($keyword!='') {
+			?>
+			$("#keyword").val("<?php echo $keyword; ?>");
+			$("#btsearch").click();
+			<?php
+			}
 			?>
 		});
 	</script>
+
 	<?php
 	llxFooter();
