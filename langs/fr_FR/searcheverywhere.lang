@@ -6,6 +6,7 @@ ATMAbout = Ce module a été développé par <a href="http://www.atm-consulting.
 Searcheverywhere=Recherche Globale
 ActionComm=Agenda
 Propal=Proposition
+SupplierInvoice = Facture Fournisseur
 Task=Tâche
 Societe=Client/Prospect/Fournisseur
 Product=Produit
