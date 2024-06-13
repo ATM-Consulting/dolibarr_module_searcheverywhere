@@ -276,8 +276,6 @@ function _search($type, $keyword, $asArray=false) {
 						$sql_where.=' OR '.$table1.'.'.$fieldname." = '".$db->escape($keyword)."'";
 					}
 				}
-
-
 			}
 		}
 	}
@@ -287,7 +285,6 @@ function _search($type, $keyword, $asArray=false) {
 	if($user->socid > 0){
 		$sql.= ' AND llx_societe.rowid='.$user->socid;
 	}
-
 
 	if(getDolGlobalString('SEARCHEVERYWHERE_NB_ROWS')) $sql.= ' LIMIT ' . getDolGlobalString('SEARCHEVERYWHERE_NB_ROWS');
 	else $sql.= ' LIMIT 20 ';
