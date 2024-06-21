@@ -21,7 +21,6 @@
 	if(!empty($conf->configurateur->enabled)) dol_include_once('/configurateur/class/configurateur.class.php');
 	if(isModEnabled('fournisseur')) dol_include_once('/fourn/class/fournisseur.facture.class.php');
 
-
 	$langs->load('searcheverywhere@searcheverywhere');
 	$langs->load('orders');
 
