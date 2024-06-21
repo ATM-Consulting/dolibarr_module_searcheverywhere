@@ -238,42 +238,21 @@ function _search($type, $keyword, $asArray=false) {
 			while($tbl = $db->fetch_object($res)) {
 				if ($tbl->Type == 'timestamp') continue;	// Fix for MySQL >= V8.0.16 - see https://bugs.mysql.com/bug.php?id=95466
 
-				if ($table1 == MAIN_DB_PREFIX.'facture_fourn') {
-					$fieldname = $tbl->Field;
-					if($tbl->Field == 'ref') continue;
+				$fieldname = $tbl->Field;
+				$sql_fields .=','. $table1.'.'.$fieldname.' as '.$table1.'_'.$fieldname;
 
-					if( strpos($tbl->Type,'varchar') !== false || strpos($tbl->Type,'text') !== false ) {
-						$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '%".$db->escape($keyword)."%'";
-					}
-					else if( strpos($tbl->Type,'int') !== false || strpos($tbl->Type,'double')!== false || strpos($tbl->Type,'float') !== false ) {
-						$i_keyword = (double)$keyword;
-						if(!empty($i_keyword))$sql_where.=' OR '.$table1.'.'.$fieldname." = ".$i_keyword;
-
-					}
-					else if( strpos($tbl->Type,'date') !== false ) {
-						$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '".$db->escape($keyword)."%'";
-					}
-					else{
-						$sql_where.=' OR '.$table1.'.'.$fieldname." = '".$db->escape($keyword)."'";
-					}
-				} else {
-					$fieldname = $tbl->Field;
-					$sql_fields .=','. $table1.'.'.$fieldname.' as '.$table1.'_'.$fieldname;
-
-					if( strpos($tbl->Type,'varchar') !== false || strpos($tbl->Type,'text') !== false ) {
-						$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '%".$db->escape($keyword)."%'";
-					}
-					else if( strpos($tbl->Type,'int') !== false || strpos($tbl->Type,'double')!== false || strpos($tbl->Type,'float') !== false ) {
-						$i_keyword = (double)$keyword;
-						if(!empty($i_keyword))$sql_where.=' OR '.$table1.'.'.$fieldname." = ".$i_keyword;
-
-					}
-					else if( strpos($tbl->Type,'date') !== false ) {
-						$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '".$db->escape($keyword)."%'";
-					}
-					else{
-						$sql_where.=' OR '.$table1.'.'.$fieldname." = '".$db->escape($keyword)."'";
-					}
+				if( strpos($tbl->Type,'varchar') !== false || strpos($tbl->Type,'text') !== false ) {
+					$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '%".$db->escape($keyword)."%'";
+				}
+				else if( strpos($tbl->Type,'int') !== false || strpos($tbl->Type,'double')!== false || strpos($tbl->Type,'float') !== false ) {
+					$i_keyword = (double)$keyword;
+					if(!empty($i_keyword))$sql_where.=' OR '.$table1.'.'.$fieldname." = ".$i_keyword;
+				}
+				else if( strpos($tbl->Type,'date') !== false ) {
+					$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '".$db->escape($keyword)."%'";
+				}
+				else{
+					$sql_where.=' OR '.$table1.'.'.$fieldname." = '".$db->escape($keyword)."'";
 				}
 			}
 		}
