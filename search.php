@@ -66,6 +66,7 @@
 			<?php if(! empty($conf->nomenclature->enabled)) echo "'nomenclature',"; ?>
 			<?php if(! empty($conf->workstationatm->enabled)) echo "'workstation',"; ?>
 			<?php if(! empty($conf->configurateur->enabled)) echo "'configurateur',"; ?>
+			<?php if(isModEnabled('fournisseur')) echo "'invoice_supplier',"; ?>
 		];
 
 		$(document).ready(function() {
@@ -117,12 +118,12 @@
 				}
 			});
 			<?php
-			if($keyword!='') {
-			?>
-			$("#keyword").val("<?php echo $keyword; ?>");
-			$("#btsearch").click();
-			<?php
-			}
+				if($keyword!='') {
+					?>
+					$("#keyword").val("<?php echo $keyword; ?>");
+					$("#btsearch").click();
+					<?php
+				}
 			?>
 		});
 	</script>

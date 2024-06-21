@@ -3,6 +3,8 @@
 ## NOT RELEASED
 
 
+# 2.3
+- NEW : Add supplier invoices research - *13/06/2024* - 2.3.0
 
 # 2.2
 - FIX : tooltip *06/05/2024* 2.2.3

@@ -19,6 +19,7 @@
 	if(!empty($conf->nomenclature->enabled)) dol_include_once('/nomenclature/class/nomenclature.class.php');
 	if(!empty($conf->workstationatm->enabled)) dol_include_once('/workstationatm/class/workstation.class.php');
 	if(!empty($conf->configurateur->enabled)) dol_include_once('/configurateur/class/configurateur.class.php');
+	if(isModEnabled('fournisseur')) dol_include_once('/fourn/class/fournisseur.facture.class.php');
 
 	$langs->load('searcheverywhere@searcheverywhere');
 	$langs->load('orders');
@@ -186,7 +187,16 @@ function _search($type, $keyword, $asArray=false) {
         $sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'configurateur_element ON ('.MAIN_DB_PREFIX.'configurateur.rowid = '.MAIN_DB_PREFIX.'configurateur_element.fk_config)';
 
         $id_field = MAIN_DB_PREFIX.'configurateur.rowid';
-    }
+    } elseif ($type == 'invoice_supplier') {
+		$table = array(MAIN_DB_PREFIX.'facture_fourn',MAIN_DB_PREFIX.'facture_fourn_extrafields',MAIN_DB_PREFIX.'facture_fourn_det',MAIN_DB_PREFIX.'facture_fourn_det_extrafields', MAIN_DB_PREFIX.'societe');
+		$objname = 'FactureFournisseur';
+		$complete_label = false;
+		$sql_join = 'LEFT JOIN '.MAIN_DB_PREFIX.'facture_fourn_extrafields ON ('.MAIN_DB_PREFIX.'facture_fourn.rowid = '.MAIN_DB_PREFIX.'facture_fourn_extrafields.fk_object)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'facture_fourn_det ON ('.MAIN_DB_PREFIX.'facture_fourn.rowid = '.MAIN_DB_PREFIX.'facture_fourn_det.fk_facture_fourn)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'facture_fourn_det_extrafields ON ('.MAIN_DB_PREFIX.'facture_fourn_det.rowid = '.MAIN_DB_PREFIX.'facture_fourn_det_extrafields.fk_object)';
+		$sql_join.=' LEFT JOIN '.MAIN_DB_PREFIX.'societe ON ('.MAIN_DB_PREFIX.'societe.rowid = '.MAIN_DB_PREFIX.'facture_fourn.fk_soc)';
+		$id_field = MAIN_DB_PREFIX.'facture_fourn.rowid';
+	}
 	$table=(Array)$table;
 
 	$sql_where = ' 0=1 ';
@@ -194,7 +204,6 @@ function _search($type, $keyword, $asArray=false) {
 
 	foreach($table as $table1) {
 		if($db->type == "pgsql"){
-
 			$sqlpg = "SELECT column_name AS field, data_type AS Type  FROM information_schema.columns WHERE table_schema = 'public' AND table_name   = '".$table1."'";
 			$res = $db->query($sqlpg);
 			//$res = $db->query('DESCRIBE '.$table1);
@@ -228,8 +237,8 @@ function _search($type, $keyword, $asArray=false) {
 
 			while($tbl = $db->fetch_object($res)) {
 				if ($tbl->Type == 'timestamp') continue;	// Fix for MySQL >= V8.0.16 - see https://bugs.mysql.com/bug.php?id=95466
+
 				$fieldname = $tbl->Field;
-				//var_dump($tbl);
 				$sql_fields .=','. $table1.'.'.$fieldname.' as '.$table1.'_'.$fieldname;
 
 				if( strpos($tbl->Type,'varchar') !== false || strpos($tbl->Type,'text') !== false ) {
@@ -238,17 +247,13 @@ function _search($type, $keyword, $asArray=false) {
 				else if( strpos($tbl->Type,'int') !== false || strpos($tbl->Type,'double')!== false || strpos($tbl->Type,'float') !== false ) {
 					$i_keyword = (double)$keyword;
 					if(!empty($i_keyword))$sql_where.=' OR '.$table1.'.'.$fieldname." = ".$i_keyword;
-
 				}
 				else if( strpos($tbl->Type,'date') !== false ) {
 					$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '".$db->escape($keyword)."%'";
 				}
-
 				else{
 					$sql_where.=' OR '.$table1.'.'.$fieldname." = '".$db->escape($keyword)."'";
 				}
-
-
 			}
 		}
 	}
@@ -261,13 +266,13 @@ function _search($type, $keyword, $asArray=false) {
 
 	if(getDolGlobalString('SEARCHEVERYWHERE_NB_ROWS')) $sql.= ' LIMIT ' . getDolGlobalString('SEARCHEVERYWHERE_NB_ROWS');
 	else $sql.= ' LIMIT 20 ';
-	//print $sql;
 	$res = $db->query($sql);
 
 	$nb_results = $db->num_rows($res);
 
 	$libelle = ucfirst($objname);
 	if($objname == 'CommandeFournisseur') $libelle = 'SupplierOrder';
+	if($objname == 'FactureFournisseur') $libelle = 'SupplierInvoice';
 
 	if(!$asArray) print '<table class="border" width="100%"><tr class="liste_titre"><td colspan="2">'.$langs->trans( $libelle ).' <span class="badge">'.$nb_results.'</span></td></tr>';
 
@@ -276,7 +281,6 @@ function _search($type, $keyword, $asArray=false) {
 	}
 	else{
 		while($obj = $db->fetch_object($res)) {
-
 
 			$o=new $objname($db);
 			if($objname == 'TAssetOF'|| $objname == 'TNomenclature' || $objname == 'TWorkstation') $o->load($PDOdb, $obj->rowid);
