@@ -65,7 +65,7 @@ class modsearcheverywhere extends DolibarrModules
         $this->description = "Description of module searcheverywhere";
         // Possible values for version are: 'development', 'experimental' or version
 
-        $this->version = '2.3.0';
+        $this->version = '2.4';
 
 		// Url to the file with your last numberversion of this module
 		require_once __DIR__ . '/../../class/techatm.class.php';
@@ -107,7 +107,7 @@ class modsearcheverywhere extends DolibarrModules
         // Minimum version of PHP required by module
         $this->phpmin = array(7,0);
         // Minimum version of Dolibarr required by module
-        $this->need_dolibarr_version = array(12,0);
+        $this->need_dolibarr_version = array(16,0);
         $this->langfiles = array("searcheverywhere@searcheverywhere"); // langfiles@searcheverywhere
         // Constants
         // List of particular constants to add when module is enabled

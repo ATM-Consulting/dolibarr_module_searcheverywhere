@@ -1,7 +1,7 @@
 
 
 ## NOT RELEASED
-
+- NEW : Compat v20 - *21/06/2024* - 2.4
 
 # 2.3
 - NEW : Add supplier invoices research - *13/06/2024* - 2.3.0
