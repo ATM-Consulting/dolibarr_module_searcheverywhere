@@ -134,9 +134,9 @@ class modsearcheverywhere extends DolibarrModules
         // Example:
         $this->tabs = array(
             //	// To add a new tab identified by code tabname1
-            //	'objecttype:+tabname1:Title1:langfile@searcheverywhere:$user->rights->searcheverywhere->read:/searcheverywhere/mynewtab1.php?id=__ID__',
+            //	'objecttype:+tabname1:Title1:langfile@searcheverywhere:$user->hasRight('searcheverywhere', 'read'):/searcheverywhere/mynewtab1.php?id=__ID__',
             //	// To add another new tab identified by code tabname2
-            //	'objecttype:+tabname2:Title2:langfile@searcheverywhere:$user->rights->othermodule->read:/searcheverywhere/mynewtab2.php?id=__ID__',
+            //	'objecttype:+tabname2:Title2:langfile@searcheverywhere:$user->hasRight('othermodule', 'read'):/searcheverywhere/mynewtab2.php?id=__ID__',
             //	// To remove an existing tab identified by code tabname
             //	'objecttype:-tabname'
         );
@@ -158,14 +158,14 @@ class modsearcheverywhere extends DolibarrModules
         // 'categories_x'		to add a tab in category view
         // (replace 'x' by type of category (0=product, 1=supplier, 2=customer, 3=member)
         // Dictionnaries
-        if (! isset($conf->searcheverywhere->enabled)) {
+        if (! isModEnabled('searcheverywhere')) {
             $conf->searcheverywhere=new stdClass();
             $conf->searcheverywhere->enabled = 0;
         }
         $this->dictionnaries = array();
         /* Example:
           // This is to avoid warnings
-          if (! isset($conf->searcheverywhere->enabled)) $conf->searcheverywhere->enabled=0;
+          if (! isModEnabled('searcheverywhere')) $conf->searcheverywhere->enabled=0;
           $this->dictionnaries=array(
           'langs'=>'searcheverywhere@searcheverywhere',
           // List of tables we want to see into dictonnary editor
@@ -197,9 +197,9 @@ class modsearcheverywhere extends DolibarrModules
           'tabrowid'=>array("rowid","rowid","rowid"),
           // Condition to show each dictionnary
           'tabcond'=>array(
-          $conf->searcheverywhere->enabled,
-          $conf->searcheverywhere->enabled,
-          $conf->searcheverywhere->enabled
+          isModEnabled('searcheverywhere'),
+          isModEnabled('searcheverywhere'),
+          isModEnabled('searcheverywhere')
           )
           );
          */
@@ -231,10 +231,10 @@ class modsearcheverywhere extends DolibarrModules
         //// Permission by default for new user (0/1)
         //$this->rights[$r][3] = 1;
         //// In php code, permission will be checked by test
-        //// if ($user->rights->permkey->level1->level2)
+        //// if ($user->hasRight('permkey', 'level1', 'level2'))
         //$this->rights[$r][4] = 'level1';
         //// In php code, permission will be checked by test
-        //// if ($user->rights->permkey->level1->level2)
+        //// if ($user->hasRight('permkey', 'level1', 'level2'))
         //$this->rights[$r][5] = 'level2';
         //$r++;
         // Main menu entries
@@ -258,9 +258,9 @@ class modsearcheverywhere extends DolibarrModules
         //	'langs'=>'mylangfile',
         //	'position'=>100,
         //	// Define condition to show or hide menu entry.
-        //	// Use '$conf->searcheverywhere->enabled' if entry must be visible if module is enabled.
-        //	'enabled'=>'$conf->searcheverywhere->enabled',
-        //	// Use 'perms'=>'$user->rights->searcheverywhere->level1->level2'
+        //	// Use 'isModEnabled('searcheverywhere')' if entry must be visible if module is enabled.
+        //	'enabled'=>'isModEnabled('searcheverywhere')',
+        //	// Use 'perms'=>'$user->hasRight('searcheverywhere', 'level1', 'level2')'
         //	// if you want your menu with a permission rules
         //	'perms'=>'1',
         //	'target'=>'',
@@ -283,9 +283,9 @@ class modsearcheverywhere extends DolibarrModules
         //	'langs'=>'mylangfile',
         //	'position'=>100,
         //	// Define condition to show or hide menu entry.
-        //	// Use '$conf->searcheverywhere->enabled' if entry must be visible if module is enabled.
-        //	'enabled'=>'$conf->searcheverywhere->enabled',
-        //	// Use 'perms'=>'$user->rights->searcheverywhere->level1->level2'
+        //	// Use 'isModEnabled('searcheverywhere')' if entry must be visible if module is enabled.
+        //	'enabled'=>'isModEnabled('searcheverywhere')',
+        //	// Use 'perms'=>'$user->hasRight('searcheverywhere', 'level1', 'level2')'
         //	// if you want your menu with a permission rules
         //	'perms'=>'1',
         //	'target'=>'',
@@ -309,10 +309,10 @@ class modsearcheverywhere extends DolibarrModules
         //	'langs'=>'mylangfile',
         //	'position'=>100,
         //	// Define condition to show or hide menu entry.
-        //	// Use '$conf->searcheverywhere->enabled' if entry must be visible if module is enabled.
+        //	// Use 'isModEnabled('searcheverywhere')' if entry must be visible if module is enabled.
         //	// Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-        //	'enabled'=>'$conf->searcheverywhere->enabled',
-        //	// Use 'perms'=>'$user->rights->searcheverywhere->level1->level2'
+        //	'enabled'=>'isModEnabled('searcheverywhere')',
+        //	// Use 'perms'=>'$user->hasRight('searcheverywhere', 'level1', 'level2')'
         //	// if you want your menu with a permission rules
         //	'perms'=>'1',
         //	'target'=>'',

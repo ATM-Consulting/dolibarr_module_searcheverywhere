@@ -20,6 +20,6 @@ if(!defined('DB_HOST')) {
     define('DB_PASS',$dolibarr_main_db_pass);
     define('DB_DRIVER',$dolibarr_main_db_type);
 }
-if((!empty($conf->of->enabled) || !empty($conf->nomenclature->enabled) ||!empty($conf->workstationatm->enabled) ||!empty($conf->configurateur->enabled)) && !dol_include_once('/abricot/inc.core.php')) {
+if((isModEnabled('of') || isModEnabled('nomenclature') ||isModEnabled('workstationatm') ||isModEnabled('configurateur')) && !dol_include_once('/abricot/inc.core.php')) {
     require __DIR__.'/class/listview.class.php'; // why not ? ;)
 }
