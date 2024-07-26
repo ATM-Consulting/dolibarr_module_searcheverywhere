@@ -15,10 +15,10 @@
 	dol_include_once('/commande/class/commande.class.php');
 	dol_include_once('/fourn/class/fournisseur.commande.class.php');
 	dol_include_once('/expedition/class/expedition.class.php');
-	if(!empty($conf->of->enabled)) dol_include_once('/of/class/ordre_fabrication_asset.class.php');
-	if(!empty($conf->nomenclature->enabled)) dol_include_once('/nomenclature/class/nomenclature.class.php');
-	if(!empty($conf->workstationatm->enabled)) dol_include_once('/workstationatm/class/workstation.class.php');
-	if(!empty($conf->configurateur->enabled)) dol_include_once('/configurateur/class/configurateur.class.php');
+	if(isModEnabled('of')) dol_include_once('/of/class/ordre_fabrication_asset.class.php');
+	if(isModEnabled('nomenclature')) dol_include_once('/nomenclature/class/nomenclature.class.php');
+	if(isModEnabled('workstationatm')) dol_include_once('/workstationatm/class/workstation.class.php');
+	if(isModEnabled('configurateur')) dol_include_once('/configurateur/class/configurateur.class.php');
 	if(isModEnabled('fournisseur')) dol_include_once('/fourn/class/fournisseur.facture.class.php');
 
 	$langs->load('searcheverywhere@searcheverywhere');
@@ -36,21 +36,21 @@
 		case 'search-all':
 
 		    $TObjectType=array('product','company','contact');
-			if ($conf->projet->enabled)
+			if (isModEnabled('projet'))
 			{
 				$TObjectType[] = 'projet';
 				$TObjectType[] = 'task';
 			}
-			if ($conf->agenda->enabled) $TObjectType[] = 'event';
-			if ($conf->propal->enabled) $TObjectType[] = 'propal';
-			if ($conf->commande->enabled) $TObjectType[] = 'order';
-			if ($conf->facture->enabled) $TObjectType[] = 'invoice';
-			if ($conf->expedition->enabled) $TObjectType[] = 'expedition';
-			if ($conf->fournisseur->enabled) $TObjectType[] = 'supplier_order';
-			if ($conf->of->enabled) $TObjectType[] = 'of';
-			if ($conf->nomenclature->enabled) $TObjectType[] = 'nomenclature';
-			if ($conf->workstationatm->enabled) $TObjectType[] = 'workstation';
-			if ($conf->configurateur->enabled) $TObjectType[] = 'configurateur';
+			if (isModEnabled('agenda')) $TObjectType[] = 'event';
+			if (isModEnabled('propal')) $TObjectType[] = 'propal';
+			if (isModEnabled('commande')) $TObjectType[] = 'order';
+			if (isModEnabled('facture')) $TObjectType[] = 'invoice';
+			if (isModEnabled('expedition')) $TObjectType[] = 'expedition';
+			if (isModEnabled('fournisseur')) $TObjectType[] = 'supplier_order';
+			if (isModEnabled('of')) $TObjectType[] = 'of';
+			if (isModEnabled('nomenclature')) $TObjectType[] = 'nomenclature';
+			if (isModEnabled('workstationatm')) $TObjectType[] = 'workstation';
+			if (isModEnabled('configurateur')) $TObjectType[] = 'configurateur';
 
 		    $conf->global->SEARCHEVERYWHERE_NB_ROWS = 5;
 		    $TResult=array();
@@ -76,7 +76,7 @@ function _search($type, $keyword, $asArray=false) {
 	$complete_label = true;
 	$show_find_field = false;
 	$sql_join = '';
-    if(!empty($conf->of->enabled) || !empty($conf->nomenclature->enabled) ||!empty($conf->workstationatm->enabled)) {
+    if(isModEnabled('of') || isModEnabled('nomenclature') || isModEnabled('workstationatm')) {
         $PDOdb = new TPDOdb;
     }
 

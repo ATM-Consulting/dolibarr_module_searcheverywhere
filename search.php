@@ -55,17 +55,17 @@
 			'product',
 			'company',
 			'contact',
-			<?php if(! empty($conf->propal->enabled)) echo "'propal',"; ?>
-			<?php if(! empty($conf->commande->enabled)) echo "'order',"; ?>
-			<?php if(! empty($conf->facture->enabled)) echo "'invoice',"; ?>
-			<?php if(! empty($conf->projet->enabled)) echo "'projet','task',"; ?>
-			<?php if(! empty($conf->agenda->enabled)) echo "'event',"; ?>
-			<?php if(! empty($conf->expedition->enabled)) echo "'expedition',"; ?>
-			<?php if(! empty($conf->fournisseur->enabled)) echo "'supplier_order',"; ?>
-			<?php if(! empty($conf->of->enabled)) echo "'of',"; ?>
-			<?php if(! empty($conf->nomenclature->enabled)) echo "'nomenclature',"; ?>
-			<?php if(! empty($conf->workstationatm->enabled)) echo "'workstation',"; ?>
-			<?php if(! empty($conf->configurateur->enabled)) echo "'configurateur',"; ?>
+			<?php if(isModEnabled('propal')) echo "'propal',"; ?>
+			<?php if(isModEnabled('commande')) echo "'order',"; ?>
+			<?php if(isModEnabled('facture')) echo "'invoice',"; ?>
+			<?php if(isModEnabled('projet')) echo "'projet','task',"; ?>
+			<?php if(isModEnabled('agenda')) echo "'event',"; ?>
+			<?php if(isModEnabled('expedition')) echo "'expedition',"; ?>
+			<?php if(isModEnabled('expeditionfournisseur')) echo "'supplier_order',"; ?>
+			<?php if(isModEnabled('of')) echo "'of',"; ?>
+			<?php if(isModEnabled('nomenclature')) echo "'nomenclature',"; ?>
+			<?php if(isModEnabled('workstationatm')) echo "'workstation',"; ?>
+			<?php if(isModEnabled('configurateur')) echo "'configurateur',"; ?>
 			<?php if(isModEnabled('fournisseur')) echo "'invoice_supplier',"; ?>
 		];
 
