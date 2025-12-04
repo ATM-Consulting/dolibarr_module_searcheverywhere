@@ -12,7 +12,7 @@ class ActionsSearcheverywhere extends \searcheverywhere\RetroCompatCommonHookAct
 	function printSearchForm($parameters, &$object, &$action, $hookmanager) {
 		global $langs,$db,$conf;
 
-		if (in_array('searchform',explode(':',$parameters['context'])))
+		if (in_array('searchform',explode(':',$parameters['context'])) && (getDolGlobalString('SEARCHEVERYWHERE_SEARCH_PREVIEW') ))
 		{
 			$langs->load('searcheverywhere@searcheverywhere');
 

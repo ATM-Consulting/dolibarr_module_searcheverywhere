@@ -28,8 +28,23 @@ include_once DOL_DOCUMENT_ROOT . "/core/modules/DolibarrModules.class.php";
 /**
  * Description and activation class for module searcheverywhere
  */
+#[\AllowDynamicProperties]
 class modsearcheverywhere extends DolibarrModules
 {
+	/**
+	 * @var int
+	 */
+	public $special = 0;
+
+	/**
+	 * @var array
+	 */
+	public $dictionnaries = array();
+
+	/**
+	 * @var array
+	 */
+	public $menus = array();
 
     /**
      * 	Constructor. Define names, constants, directories, boxes, permissions
