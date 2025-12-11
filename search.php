@@ -1,4 +1,19 @@
 <?php
+/* Copyright (C) 2025 ATM Consulting
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
 	require 'config.php';
 	dol_include_once('/core/lib/functions.lib.php');
 	dol_include_once('/searcheverywhere/lib/searcheverywhere.lib.php');
@@ -9,10 +24,10 @@
 	if (empty($keyword)) $keyword=GETPOST('sall');
 	if (empty($keyword)) $keyword=GETPOST('search_all');
 
-	llxHeader('', $langs->trans('Searcheverywhere'), '', '', 0, 0, array('/searcheverywhere/js/jquery.qtip.min.js')  );
+	llxHeader('', $langs->trans('Searcheverywhere'), '', '', 0, 0, array('/searcheverywhere/js/jquery.qtip.min.js'));
 	$head = searcheverywhere_prepare_head($keyword);
 	dol_fiche_head($head, 'search', $langs->trans('Searcheverywhere'), 0, 'searcheverywhere@searcheverywhere');
-	?>
+?>
 
 	<link rel="stylesheet" type="text/css" href="js/jquery.qtip.min.css">
 	<script type="text/javascript" src="js/jquery.qtip.min.js"></script>
@@ -35,10 +50,10 @@
 			width:300px;
 			float:left;
 			border-color: #bbb #aaa #aaa;
-		    border-style: solid;
-		    border-width: 1px;
-		    box-shadow: 3px 3px 4px #ddd;
-		    margin: 0 10px 14px 0;
+			border-style: solid;
+			border-width: 1px;
+			box-shadow: 3px 3px 4px #ddd;
+			margin: 0 10px 14px 0;
 		}
 		.highlight {
 			font-weight: bold;
@@ -55,18 +70,18 @@
 			'product',
 			'company',
 			'contact',
-			<?php if(isModEnabled('propal')) echo "'propal',"; ?>
-			<?php if(isModEnabled('commande')) echo "'order',"; ?>
-			<?php if(isModEnabled('facture')) echo "'invoice',"; ?>
-			<?php if(isModEnabled('projet')) echo "'projet','task',"; ?>
-			<?php if(isModEnabled('agenda')) echo "'event',"; ?>
-			<?php if(isModEnabled('expedition')) echo "'expedition',"; ?>
-			<?php if(isModEnabled('expeditionfournisseur')) echo "'supplier_order',"; ?>
-			<?php if(isModEnabled('of')) echo "'of',"; ?>
-			<?php if(isModEnabled('nomenclature')) echo "'nomenclature',"; ?>
-			<?php if(isModEnabled('workstationatm')) echo "'workstation',"; ?>
-			<?php if(isModEnabled('configurateur')) echo "'configurateur',"; ?>
-			<?php if(isModEnabled('fournisseur')) echo "'invoice_supplier',"; ?>
+			<?php if (isModEnabled('propal')) echo "'propal',"; ?>
+			<?php if (isModEnabled('commande')) echo "'order',"; ?>
+			<?php if (isModEnabled('facture')) echo "'invoice',"; ?>
+			<?php if (isModEnabled('projet')) echo "'projet','task',"; ?>
+			<?php if (isModEnabled('agenda')) echo "'event',"; ?>
+			<?php if (isModEnabled('expedition')) echo "'expedition',"; ?>
+			<?php if (isModEnabled('expeditionfournisseur')) echo "'supplier_order',"; ?>
+			<?php if (isModEnabled('of')) echo "'of',"; ?>
+			<?php if (isModEnabled('nomenclature')) echo "'nomenclature',"; ?>
+			<?php if (isModEnabled('workstationatm')) echo "'workstation',"; ?>
+			<?php if (isModEnabled('configurateur')) echo "'configurateur',"; ?>
+			<?php if (isModEnabled('fournisseur')) echo "'invoice_supplier',"; ?>
 		];
 
 		$(document).ready(function() {
@@ -118,12 +133,12 @@
 				}
 			});
 			<?php
-				if($keyword!='') {
-					?>
+			if ($keyword!='') {
+				?>
 					$("#keyword").val("<?php echo $keyword; ?>");
 					$("#btsearch").click();
 					<?php
-				}
+			}
 			?>
 		});
 	</script>
