@@ -214,6 +214,12 @@ function _search($type, $keyword, $asArray = false)
 				if ( strpos($tbl->Type, 'varchar') !== false || strpos($tbl->Type, 'text') !== false ) {
 					$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '%".$db->escape($keyword)."%'";
 				} elseif ( strpos($tbl->Type, 'smallint') !== false || strpos($tbl->Type, 'double')!== false || strpos($tbl->Type, 'float') !== false ) {
+					// Skip spatial and other incompatible types
+					if(strpos($tbl->Type,'point') !== false
+						|| strpos($tbl->Type,'geometry') !== false
+						|| strpos($tbl->Type,'spatial') !== false) {
+						continue;
+					}
 					$i_keyword = (double) $keyword;
 					if (!empty($i_keyword))$sql_where.=' OR '.$table1.'.'.$fieldname." = ".$i_keyword;
 				} elseif ( strpos($tbl->Type, 'date') !== false ) {
@@ -234,6 +240,12 @@ function _search($type, $keyword, $asArray = false)
 				if ( strpos($tbl->Type, 'varchar') !== false || strpos($tbl->Type, 'text') !== false ) {
 					$sql_where.=' OR '.$table1.'.'.$fieldname." LIKE '%".$db->escape($keyword)."%'";
 				} elseif ( strpos($tbl->Type, 'int') !== false || strpos($tbl->Type, 'double')!== false || strpos($tbl->Type, 'float') !== false ) {
+					// Skip spatial and other incompatible types
+					if(strpos($tbl->Type,'point') !== false
+						|| strpos($tbl->Type,'geometry') !== false
+						|| strpos($tbl->Type,'spatial') !== false) {
+						continue;
+					}
 					$i_keyword = (double) $keyword;
 					if (!empty($i_keyword))$sql_where.=' OR '.$table1.'.'.$fieldname." = ".$i_keyword;
 				} elseif ( strpos($tbl->Type, 'date') !== false ) {
